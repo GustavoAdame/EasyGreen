@@ -5,7 +5,7 @@ Being stuck home made me realized that I wasn't the most environmentally friendl
 
 Knowing that I may not be the only one disregarding the environment, I decided to leverage technology to help others be more sustainable. The issues that I address is food waste. 
 
-40% of the food in the U.S. today goes uneaten which is equivalent of $165 billion dollars worth of food each year. Food that decay in landfills can produces methane, a potent greenhouse gas. And the list of problems goes on....
+40% of the food in the U.S. today goes uneaten which is equivalent of $165 billion dollars worth of food each year. Food that decay in landfills can produce methane which is a potent greenhouse gas. And the list of problems goes on....
 
 EasyGreen is a intuitive way for people to manage their food and waste by having a digital inventory of food items in their household and provide an array of tools to be eco-friendly:
 
