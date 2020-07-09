@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.easygreen.R;
+import com.example.easygreen.fragments.DiscoverFragment;
+import com.example.easygreen.fragments.InventoryFragment;
+import com.example.easygreen.fragments.RecipeFragment;
+import com.example.easygreen.fragments.ShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.action_inventory){
-                    //currentFragment = new InventoryFragment();
+                    currentFragment = new InventoryFragment();
                 } else if (item.getItemId() == R.id.action_recipes){
-                    //currentFragment = new RecipeFragment();
+                    currentFragment = new RecipeFragment();
                 } else if (item.getItemId() == R.id.action_shopping_list){
-                    //currentFragment = new ShoppingListFragment();
+                    currentFragment = new ShoppingListFragment();
                 } else if (item.getItemId() == R.id.action_discover){
-                    //currentFragment = new DiscoverFragment();
+                    currentFragment = new DiscoverFragment();
                 }
-                //fragmentManager.beginTransaction().replace(R.id.flContainer, currentFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, currentFragment).commit();
                 return true;
             }
         });
-       // bottomNavigationView.setSelectedItemId(R.id.action_inventory);
+        bottomNavigationView.setSelectedItemId(R.id.action_inventory);
     }
 }
