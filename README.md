@@ -145,15 +145,15 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 ## Schema 
 
-**User** *(user_id, name, email, phone_number, zip_code)*
-**Opens** *(user_id, account_num)*
-**Account** *(account_num, date_opened)*
-**Shares** *(account_num, post_id)*
-**Post** *(post_id, timestamp, media, caption)*
-**Creates** *(account_num, iList_id)*
-**Inventory** *(iList_id, count, [Ingredients])*
-**Holds** *(account_num, rList_id)*
-**Recipes** *(rList_id, count, [Recipes])*
+<br> **User** *(user_id, name, email, phone_number, zip_code)*
+<br> **Opens** *(user_id, account_num)*
+<br> **Account** *(account_num, date_opened)*
+<br> **Shares** *(account_num, post_id)*
+<br> **Post** *(post_id, timestamp, media, caption)*
+<br> **Creates** *(account_num, iList_id)*
+<br> **Inventory** *(iList_id, count, [Ingredients])*
+<br> **Holds** *(account_num, rList_id)*
+<br> **Recipes** *(rList_id, count, [Recipes])*
 
 
 ### Models
@@ -161,7 +161,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 ### Networking
 **Spoonacular Nutrition, Recipe, and Food API**
-Base URL: https://rapidapi.com/spoonacular/api/recipe-food-nutrition
+<br> Base URL: https://rapidapi.com/spoonacular/api/recipe-food-nutrition
 
 
 | HTTP Verb | Endpoint | Description|
