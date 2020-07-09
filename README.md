@@ -60,17 +60,17 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 **Required Must-have Stories**
 
-* User can login/sign-up with a Facebook account 
-* User are able to select items from a list of ingridents
-* User are able to see and update a shopping list on a seperate activity 
-* User can see a list of recipes which they can select and read from given ingridents 
-* User can share a post on Facebook from the app
+- [ ] User can login with a Facebook account 
+- [ ] User are able to select items from a list of ingridents
+- [ ] User are able to see and update a shopping list on a seperate activity 
+- [ ] User can see a list of recipes which they can select and read from given ingridents 
+- [ ] User can share a post on Facebook from the app
 
 **Optional Nice-to-have Stories**
 
-* Keep track of user food items expiration dates and send app notifications to alert user  
-* Have a nice graph of current inventory broken down in categories 
-* Have an activity for video content from community x 
+- [ ] Keep track of user food items expiration dates and send app notifications to alert user  
+- [ ] Have a nice graph of current inventory broken down in categories 
+- [ ] Have an activity for video content from community x 
 
 ### 2. Screen Archetypes
 
