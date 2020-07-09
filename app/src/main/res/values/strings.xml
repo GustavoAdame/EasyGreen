@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">EasyGreen</string>
+    <string name="easygreen">EasyGreen</string>
+    <string name="committed_to_be_green">Committed to be Green</string>
+    <string name="or">or</string>
+    <string name="log_in_with_facebook">Log in with Facebook</string>
+    <string name="skip_to_start">Skip to Start</string>
+
+    <string name="facebook_app_id">659694868090895</string>
+    <string name="fb_login_protocol_scheme">fb659694868090895</string>
 </resources>
