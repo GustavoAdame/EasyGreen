@@ -1,6 +1,5 @@
 EasyGreen 
 ===
-## [Live on Github](https://github.com/GustavoAdame/EasyGreen.git)
 
 ## Table of Contents
 1. [Overview](#Overview)
