@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,80 +9,77 @@
     android:textAlignment="center"
     tools:context=".activities.LoginActivity">
 
-
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="false"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="100dp"
         android:text="@string/easygreen"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFFFF"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.568"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/tvMotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_alignBottom="@+id/tvAppName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="-38dp"
         android:text="@string/committed_to_be_green"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
+        android:textStyle="italic" />
 
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="44dp"
         android:layout_height="46dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvMotto"
-        app:layout_constraintEnd_toStartOf="@+id/tvAppName"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignLeft="@+id/tvAppName"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginTop="100dp"
         app:srcCompat="@android:drawable/ic_menu_week" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btnFBLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvMotto"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="156dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMotto" />
-
-    <Button
-        android:id="@+id/btnNoLogin"
-        android:layout_width="193dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="228dp"
-        android:text="@string/skip_to_start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="-157dp"
+        android:onClick="openFB" />
 
     <TextView
         android:id="@+id/tvOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_alignTop="@+id/btnFBLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/or"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/btnNoLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFBLogin"
-        app:layout_constraintVertical_bias="0.607" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnNoLogin"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvOr"
+        android:onClick="startApp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/white"
+        android:text="@string/skip_to_start"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black" />
+
+
+</RelativeLayout>
