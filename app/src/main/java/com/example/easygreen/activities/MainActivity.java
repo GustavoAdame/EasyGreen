@@ -1,8 +1,10 @@
-package com.example.easygreen;
+package com.example.easygreen.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.easygreen.R;
 
 public class MainActivity extends AppCompatActivity {
 
