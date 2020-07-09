@@ -111,7 +111,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 * Discover
   
 ## Wireframes
-<p align=center
+<p align=center>
   <img src="https://i.imgur.com/cNdekOE.jpg" height=400>
   
   <img src="https://i.imgur.com/05FMoyN.jpg" height=400>
@@ -119,7 +119,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
    <img src="https://i.imgur.com/wkcmZDD.jpg" height=400>
 </p>
 
-<p align=center
+<p align=center>
   <img src="https://i.imgur.com/nS8tcdP.jpg" height=400>
   
   <img src="https://i.imgur.com/4Ejjtpw.jpg" height=400>
@@ -127,7 +127,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
    <img src="https://i.imgur.com/3IwnbAr.jpg" height=400>
 </p>
 
-<p align=center
+<p align=center>
   <img src="https://i.imgur.com/Eav6c6b.jpg" height=400>
   
   <img src="https://i.imgur.com/k2G3Wcj.jpg" height=400>
