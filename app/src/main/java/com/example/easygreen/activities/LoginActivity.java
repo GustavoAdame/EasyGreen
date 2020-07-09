@@ -71,15 +71,18 @@ public class LoginActivity extends AppCompatActivity {
         if (isLoggedIn){
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            finish();
         } else {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            finish();
         }
     }
 
     public void startApp(View view) {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+        finish();
     }
 }
