@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,19 +54,25 @@ public class InventoryFragment extends Fragment {
 
         displayToolbar(view);
         displayRecyclerView(view);
-        getIngredients();
+        getInventory();
         return view;
     }
 
-    private void getIngredients() {
-        ParseQuery<Ingredient> query = ParseQuery.getQuery(Ingredient.class);
-        query.findInBackground(new FindCallback<Ingredient>() {
+    private void getInventory() {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.findInBackground(new FindCallback<Inventory>() {
             @Override
-            public void done(List<Ingredient> items, ParseException e) {
-                if(e == null){
-                    ingredients.addAll(items);
-                    inventoryAdapter.notifyDataSetChanged();
-                }
+            public void done(List<Inventory> inventories, ParseException e) {
+                ParseRelation<Ingredient> ingredientRelation = inventories.get(0).getRelation(KEY_inventory_list);
+                ingredientRelation.getQuery().findInBackground(new FindCallback<Ingredient>() {
+                    @Override
+                    public void done(List<Ingredient> ingredientList, ParseException e) {
+                        for (Ingredient item: ingredientList) {
+                            ingredients.add(item);
+                        }
+                        inventoryAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
