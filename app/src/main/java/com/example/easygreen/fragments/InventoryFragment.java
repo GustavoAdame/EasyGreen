@@ -21,6 +21,10 @@ import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.models.Group;
 import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Inventory;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +32,8 @@ import java.util.List;
 public class InventoryFragment extends Fragment {
     private Toolbar toolbar;
     private InventoryAdapter inventoryAdapter;
-    private List<Ingredient> ingredients;
+    private List<Ingredient> ingredients = new ArrayList<>();
     private RecyclerView rvInventory;
-
-    public InventoryFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,42 +44,35 @@ public class InventoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
-        ingredients = new ArrayList<>();
 
-        /* Sample Data */
-        Group dairy = new Group();
-        dairy.setName("Dairy");
+        displayToolbar(view);
+        displayRecyclerView(view, this.ingredients);
+        getIngredients(ingredients);
 
-        Ingredient cheese = new Ingredient();
-        cheese.setName("Cheese");
-        cheese.setGroup(dairy);
-
-        Ingredient milk = new Ingredient();
-        milk.setName("Milk");
-        milk.setGroup(dairy);
-
-        ingredients.add(milk);
-        ingredients.add(cheese);
-
-        dairy.setIngredients(ingredients);
-
-        /* Current Dairy Ingredients */
-        List<Ingredient> dairyIngredients = dairy.getIngredients();
-
-
-        callToolbar(view);
-        callRecyclerView(view, this.ingredients);
         return view;
     }
 
-    private void callRecyclerView(View view, List<Ingredient> list) {
+    private void getIngredients(List<Ingredient> list) {
+        ParseQuery<Ingredient> query = ParseQuery.getQuery(Ingredient.class);
+        query.findInBackground(new FindCallback<Ingredient>() {
+            @Override
+            public void done(List<Ingredient> items, ParseException e) {
+                if(e == null){
+                    ingredients.addAll(items);
+                    inventoryAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void displayRecyclerView(View view, List<Ingredient> list) {
         rvInventory = view.findViewById(R.id.rvInventory);
         inventoryAdapter = new InventoryAdapter(list);
         rvInventory.setAdapter(inventoryAdapter);
         rvInventory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void callToolbar(View view) {
+    private void displayToolbar(View view) {
         toolbar = view.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.inventory_menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
