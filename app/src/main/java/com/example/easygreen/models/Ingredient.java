@@ -1,24 +1,27 @@
 package com.example.easygreen.models;
 
-import android.widget.ImageView;
 
-public class Ingredient {
-    private String name;
-    private Group group;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
-    public String getName() {
-        return name;
+@ParseClassName("Ingredient")
+public class Ingredient extends ParseObject {
+    public static final String KEY_ingredient_name = "ingredient_name";
+    public static final String KEY_group = "group";
+
+    public String getName(){
+        return getString(KEY_ingredient_name);
+    }
+    public void setName(String name){
+        put(KEY_ingredient_name, name);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public ParseObject getGroup(){
+        return getParseObject(KEY_group);
     }
 
-    public Group getGroup() {
-        return group;
+    public void setGroup(Group group){
+        put(KEY_group, group);
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
 }

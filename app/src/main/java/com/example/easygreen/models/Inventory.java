@@ -1,33 +1,30 @@
 package com.example.easygreen.models;
 
-import java.util.HashSet;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+import com.parse.ParseRelation;
 
-public class Inventory {
-    private long ID;
-    private int count;
-    private HashSet<Ingredient> list;
+import java.util.List;
 
-    public long getID() {
-        return ID;
+
+@ParseClassName("Inventory")
+public class Inventory  extends ParseObject {
+    public static final String KEY_count = "count";
+    public static final String KEY_inventory_list = "inventory_list";
+
+    public int getCount(){
+        return getInt(KEY_count);
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setCount(int count){
+        put(KEY_count, count);
     }
 
-    public int getCount() {
-        return count;
+    public ParseRelation getInventory(){
+        return getRelation(KEY_inventory_list);
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public HashSet<Ingredient> getList() {
-        return list;
-    }
-
-    public void setList(HashSet<Ingredient> list) {
-        this.list = list;
+    public void setInventory(List<Ingredient> ingredients){
+        put(KEY_inventory_list, ingredients);
     }
 }

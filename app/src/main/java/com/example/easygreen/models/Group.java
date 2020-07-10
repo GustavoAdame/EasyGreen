@@ -1,24 +1,30 @@
 package com.example.easygreen.models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+import com.parse.ParseRelation;
+
 import java.util.List;
 
-public class Group {
-    private String name;
-    private List<Ingredient> ingredients;
+@ParseClassName("Group")
+public class Group extends ParseObject {
+    public static final String KEY_group_name = "group_name";
+    public static final String KEY_group_list = "group_list";
 
-    public String getName() {
-        return name;
+    public String getName(){
+        return getString(KEY_group_name);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String groupName){
+        put(KEY_group_name, groupName);
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
+    public ParseRelation getList(){
+        return getRelation(KEY_group_name);
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setList(List<Ingredient> groupList){
+        put(KEY_group_list, groupList);
     }
+
 }
