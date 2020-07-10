@@ -25,9 +25,15 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.easygreen.models.Ingredient.KEY_group;
+import static com.example.easygreen.models.Ingredient.KEY_ingredient_name;
+import static com.example.easygreen.models.Inventory.KEY_inventory_list;
+import static com.example.easygreen.models.Inventory.KEY_objectId;
 
 public class InventoryFragment extends Fragment {
     private Toolbar toolbar;
@@ -46,13 +52,12 @@ public class InventoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
 
         displayToolbar(view);
-        displayRecyclerView(view, this.ingredients);
-        getIngredients(ingredients);
-
+        displayRecyclerView(view);
+        getIngredients();
         return view;
     }
 
-    private void getIngredients(List<Ingredient> list) {
+    private void getIngredients() {
         ParseQuery<Ingredient> query = ParseQuery.getQuery(Ingredient.class);
         query.findInBackground(new FindCallback<Ingredient>() {
             @Override
@@ -65,9 +70,9 @@ public class InventoryFragment extends Fragment {
         });
     }
 
-    private void displayRecyclerView(View view, List<Ingredient> list) {
+    private void displayRecyclerView(View view) {
         rvInventory = view.findViewById(R.id.rvInventory);
-        inventoryAdapter = new InventoryAdapter(list);
+        inventoryAdapter = new InventoryAdapter(ingredients);
         rvInventory.setAdapter(inventoryAdapter);
         rvInventory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
