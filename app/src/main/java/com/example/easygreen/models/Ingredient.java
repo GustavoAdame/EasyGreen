@@ -4,12 +4,7 @@ import android.widget.ImageView;
 
 public class Ingredient {
     private String name;
-    private String group;
-
-    public Ingredient(String name, String group) {
-        this.name = name;
-        this.group = group;
-    }
+    private Group group;
 
     public String getName() {
         return name;
@@ -19,11 +14,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public String getGroup() {
+    public Group getGroup() {
         return group;
     }
 
-    public void setGroup(String group) {
+    public void setGroup(Group group) {
         this.group = group;
     }
 }
