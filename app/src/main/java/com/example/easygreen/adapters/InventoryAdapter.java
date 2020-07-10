@@ -58,7 +58,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             btnIngredientAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "ADD BUTTON CLICKED", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "DELETE BUTTON CLICKED", Toast.LENGTH_LONG).show();
                 }
             });
         }
