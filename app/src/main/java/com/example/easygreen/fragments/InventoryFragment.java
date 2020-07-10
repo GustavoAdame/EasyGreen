@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.easygreen.R;
 import com.example.easygreen.adapters.InventoryAdapter;
+import com.example.easygreen.models.Group;
 import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Inventory;
 
@@ -41,16 +42,31 @@ public class InventoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
+        ingredients = new ArrayList<>();
 
         /* Sample Data */
-        Ingredient milk = new Ingredient("Milk", "Dairy");
-        Ingredient cheese = new Ingredient("Cheese", "Dairy");
-        ingredients = new ArrayList<>();
+        Group dairy = new Group();
+        dairy.setName("Dairy");
+
+        Ingredient cheese = new Ingredient();
+        cheese.setName("Cheese");
+        cheese.setGroup(dairy);
+
+        Ingredient milk = new Ingredient();
+        milk.setName("Milk");
+        milk.setGroup(dairy);
+
         ingredients.add(milk);
         ingredients.add(cheese);
 
+        dairy.setIngredients(ingredients);
+
+        /* Current Dairy Ingredients */
+        List<Ingredient> dairyIngredients = dairy.getIngredients();
+
+
         callToolbar(view);
-        callRecyclerView(view, ingredients);
+        callRecyclerView(view, this.ingredients);
         return view;
     }
 
