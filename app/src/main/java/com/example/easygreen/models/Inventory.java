@@ -7,12 +7,6 @@ public class Inventory {
     private int count;
     private HashSet<Ingredient> list;
 
-    public Inventory(long ID, int count, HashSet<Ingredient> list) {
-        this.ID = ID;
-        this.count = count;
-        this.list = list;
-    }
-
     public long getID() {
         return ID;
     }
