@@ -160,8 +160,8 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 <img src="https://i.imgur.com/nSZxnte.jpg">
 
 ### Networking
-**Spoonacular Nutrition, Recipe, and Food API**
-<br> Base URL: https://rapidapi.com/spoonacular/api/recipe-food-nutrition
+**Spoonacular API**
+<br> Base URL: https://spoonacular.com/food-api/docs#Search-Recipes-by-Ingredients
 
 
 | HTTP Verb | Endpoint | Description|
