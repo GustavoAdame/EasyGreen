@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.groups.DairyActivity"></activity>
+        <activity android:name=".activities.groups.FishActivity"></activity>
+        <activity android:name=".activities.groups.MeatActivity" />
+        <activity android:name=".activities.groups.GrainActivity" />
+        <activity android:name=".activities.groups.VegetableActivity" />
+        <activity android:name=".activities.groups.FruitActivity" />
+        <activity android:name=".activities.groups.DairyActivity" />
         <activity android:name=".activities.SearchActivity" />
 
         <meta-data
