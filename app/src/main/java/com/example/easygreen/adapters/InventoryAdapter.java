@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easygreen.R;
 import com.example.easygreen.models.Ingredient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> {
@@ -23,7 +22,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     public ImageView ivIngredientLogo;
     public TextView tvIngredientName;
-    public TextView btnIngredientAdd;
+    public TextView btnIngredientDelete;
 
     public InventoryAdapter(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
@@ -53,9 +52,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             super(itemView);
             ivIngredientLogo = itemView.findViewById(R.id.ivIngredientLogo);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientName);
-            btnIngredientAdd = itemView.findViewById(R.id.btnIngredientAdd);
+            btnIngredientDelete = itemView.findViewById(R.id.btnIngredientDelete);
 
-            btnIngredientAdd.setOnClickListener(new View.OnClickListener() {
+            btnIngredientDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(context, "DELETE BUTTON CLICKED", Toast.LENGTH_LONG).show();

@@ -1,6 +1,13 @@
 package com.example.easygreen.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -8,33 +15,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.easygreen.R;
+import com.example.easygreen.activities.SearchActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
-import com.example.easygreen.models.Group;
 import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Inventory;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.easygreen.models.Ingredient.KEY_group;
-import static com.example.easygreen.models.Ingredient.KEY_ingredient_name;
 import static com.example.easygreen.models.Inventory.KEY_inventory_list;
-import static com.example.easygreen.models.Inventory.KEY_objectId;
 
 public class InventoryFragment extends Fragment {
     private Toolbar toolbar;
@@ -53,8 +47,8 @@ public class InventoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
 
         displayToolbar(view);
-        displayRecyclerView(view);
         getInventory();
+        displayRecyclerView(view);
         return view;
     }
 
@@ -91,7 +85,8 @@ public class InventoryFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.search){
-                    Toast.makeText(getContext(), "CLICKED ON SEARCH", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getContext(), SearchActivity.class);
+                    startActivity(i);
                 }
                 return false;
             }
