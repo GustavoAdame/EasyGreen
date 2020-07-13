@@ -76,7 +76,7 @@
         android:onClick="startApp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@android:color/white"
+        android:backgroundTint="@android:color/white"
         android:text="@string/skip_to_start"
         android:textAllCaps="false"
         android:textColor="@android:color/black" />
