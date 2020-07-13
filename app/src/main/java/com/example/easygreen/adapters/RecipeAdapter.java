@@ -1,8 +1,6 @@
 package com.example.easygreen.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.easygreen.R;
 import com.example.easygreen.models.Recipe;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 
 import java.util.List;
@@ -41,16 +38,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Recipe item = recipes.get(position);
         ParseFile image = item.getImage();
-        image.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                ivRecipeImage.setImageBitmap(bmp);
-            }
-        });
+        String url = image.getUrl();
+        Glide.with(context).load(url).into(ivRecipeImage);
         tvRecipeTitle.setText(item.getName());
         tvRecipeTag.setText("- "+item.getTag()+" -");
     }
