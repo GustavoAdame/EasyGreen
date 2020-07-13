@@ -47,8 +47,8 @@ public class InventoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_inventory, container, false);
 
         displayToolbar(view);
-        displayRecyclerView(view);
         getInventory();
+        displayRecyclerView(view);
         return view;
     }
 
