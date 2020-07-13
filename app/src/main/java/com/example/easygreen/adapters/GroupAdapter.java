@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +19,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     public List<Ingredient> ingredients;
     private Context context;
 
-    public ImageView ivIngredientLogo;
     public TextView tvIngredientName;
     public TextView btnIngredientAdd;
 
@@ -50,7 +48,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivIngredientLogo = itemView.findViewById(R.id.ivIngredientLogo);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientName);
             btnIngredientAdd = itemView.findViewById(R.id.btnIngredientAdd);
 
