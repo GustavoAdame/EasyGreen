@@ -174,3 +174,4 @@ GIF created with [KAP](https://getkap.co/)
 | HTTP Verb | Endpoint | Description|
 | -------- | -------- | -------- |
 | ` GET `    | /findByIngredients     | Search Recipes by Ingredients    |
+| ` GET `    | /{id}/information      | Get information about a recipe  |
