@@ -243,7 +243,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvFish"
-            android:onClick="fishSelect"
+            android:onClick="seafoodSelect"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -273,7 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Fish"
+                    android:text="Seafood"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"

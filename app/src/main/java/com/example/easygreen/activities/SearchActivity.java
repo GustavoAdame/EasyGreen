@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easygreen.R;
 import com.example.easygreen.activities.groups.DairyActivity;
-import com.example.easygreen.activities.groups.FishActivity;
+import com.example.easygreen.activities.groups.SeafoodActivity;
 import com.example.easygreen.activities.groups.FruitActivity;
 import com.example.easygreen.activities.groups.GrainActivity;
 import com.example.easygreen.activities.groups.MeatActivity;
@@ -47,8 +47,8 @@ public class SearchActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void fishSelect(View view) {
-        Intent i = new Intent(this, FishActivity.class);
+    public void seafoodSelect(View view) {
+        Intent i = new Intent(this, SeafoodActivity.class);
         startActivity(i);
     }
 }

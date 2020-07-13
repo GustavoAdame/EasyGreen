@@ -27,9 +27,8 @@ public class FruitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fruit);
-
-        getFruitGroup();
         displayRecyclerView();
+        getFruitGroup();
     }
 
     private void displayRecyclerView() {
@@ -41,7 +40,7 @@ public class FruitActivity extends AppCompatActivity {
 
     private void getFruitGroup() {
         ParseQuery<Group> group = ParseQuery.getQuery(Group.class);
-        group.whereEqualTo(Group.KEY_group_name, "Fruits");
+        group.whereEqualTo(Group.KEY_group_name, "Fruit");
         group.findInBackground(new FindCallback<Group>() {
             @Override
             public void done(List<Group> groups, ParseException e) {

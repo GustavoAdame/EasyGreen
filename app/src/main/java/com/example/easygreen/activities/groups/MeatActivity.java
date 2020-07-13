@@ -27,9 +27,8 @@ public class MeatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meat);
-
-        getMeatGroup();
         displayRecyclerView();
+        getMeatGroup();
     }
 
     private void displayRecyclerView() {
@@ -41,7 +40,7 @@ public class MeatActivity extends AppCompatActivity {
 
     private void getMeatGroup() {
         ParseQuery<Group> group = ParseQuery.getQuery(Group.class);
-        group.whereEqualTo(Group.KEY_group_name, "Meats");
+        group.whereEqualTo(Group.KEY_group_name, "Meat");
         group.findInBackground(new FindCallback<Group>() {
             @Override
             public void done(List<Group> groups, ParseException e) {

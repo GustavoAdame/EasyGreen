@@ -143,6 +143,13 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 * Press H to restart from Login Screen
 
+## Weekly Update of Application 
+<p align="center">
+<img src="EasyGreen1.gif" height="50%">
+
+GIF created with [KAP](https://getkap.co/).    
+</p> 
+
 ## Schema 
 
 <br> **User** *(user_id, name, email, phone_number, zip_code)*
