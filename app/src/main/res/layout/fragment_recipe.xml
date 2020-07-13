@@ -86,6 +86,6 @@
         android:id="@+id/rvRecipes"
         android:layout_below="@+id/llRecipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
