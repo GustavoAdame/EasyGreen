@@ -10,4 +10,6 @@
     <string name="fb_login_protocol_scheme">fb659694868090895</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="API_Key">375469b443e24f9fa1b3270fad4d7402</string>
 </resources>

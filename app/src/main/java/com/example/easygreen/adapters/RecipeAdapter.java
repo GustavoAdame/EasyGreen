@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.easygreen.R;
 import com.example.easygreen.models.Recipe;
-import com.parse.ParseFile;
 
 import java.util.List;
 
@@ -40,11 +39,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Recipe item = recipes.get(position);
-        ParseFile image = item.getImage();
-        String url = image.getUrl();
+        String url = item.getURL();
         Glide.with(context).load(url).into(ivRecipeImage);
         tvRecipeTitle.setText(item.getName());
-        tvRecipeTag.setText("- "+item.getTag()+" -");
+//      tvRecipeTag.setText("- "+item.getTag()+" -");
     }
 
     @Override

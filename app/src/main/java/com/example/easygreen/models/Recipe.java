@@ -1,47 +1,42 @@
 package com.example.easygreen.models;
 
 
-import com.parse.ParseClassName;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-
-@ParseClassName("Recipe")
-public class Recipe extends ParseObject {
-    public static final String KEY_recipe_name = "recipe_name";
-    public static final String KEY_recipe_image = "recipe_image";
-    public static final String KEY_recipe_tag = "recipe_tag";
-    public static final String KEY_recipe_description = "recipe_description";
+public class Recipe {
+    public String recipe_name = "";
+    public String recipe_imageURL = "";
+    public String recipe_tag = "";
+    public String recipe_description = "";
 
     public String getName(){
-        return getString(KEY_recipe_name);
+        return recipe_name;
     }
 
     public void setName(String name){
-        put(KEY_recipe_name, name);
-    }
-
-    public ParseFile getImage(){
-        return getParseFile(KEY_recipe_image);
-    }
-
-    public void setImage(ParseFile image){
-        put(KEY_recipe_image, image);
+        recipe_name = name;
     }
 
     public String getTag(){
-        return getString(KEY_recipe_tag);
+        return recipe_tag;
     }
 
     public void setTag(String tag){
-        put(KEY_recipe_tag, tag);
+        recipe_tag = tag;
+    }
+
+    public String getURL(){
+        return recipe_imageURL;
+    }
+
+    public void setURL(String url){
+        recipe_imageURL = url;
     }
 
     public String getDescription(){
-        return getString(KEY_recipe_description);
+        return recipe_description;
     }
 
     public void setDescription(String description){
-        put(KEY_recipe_description, description);
+        recipe_description = description;
     }
 
 }
