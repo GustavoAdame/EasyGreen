@@ -23,7 +23,20 @@
             android:id="@+id/rvInventory"
             android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnGetRecipes"/>
+
+        <Button
+            android:id="@+id/btnGetRecipes"
+            android:text="Get Recipes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"/>
 
     </RelativeLayout>
 

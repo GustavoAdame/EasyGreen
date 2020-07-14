@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
+import com.example.easygreen.activities.MainActivity;
 import com.example.easygreen.activities.SearchActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.models.Ingredient;
@@ -35,6 +37,7 @@ public class InventoryFragment extends Fragment {
     private InventoryAdapter inventoryAdapter;
     private List<Ingredient> ingredients = new ArrayList<>();
     private RecyclerView rvInventory;
+    public String inventory_list = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,24 @@ public class InventoryFragment extends Fragment {
         displayToolbar(view);
         getInventory();
         displayRecyclerView(view);
+
+        Button btnGetRecipes = view.findViewById(R.id.btnGetRecipes);
+        btnGetRecipes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendDatatoAPI();
+            }
+        });
+
         return view;
+    }
+
+    private void sendDatatoAPI() {
+        Bundle bundle = new Bundle();
+        bundle.putString("inventory", inventory_list);
+        Intent i = new Intent(getContext(), MainActivity.class);
+        i.putExtras(bundle);
+        startActivity(i);
     }
 
     private void getInventory() {
@@ -61,8 +81,13 @@ public class InventoryFragment extends Fragment {
                 ingredientRelation.getQuery().findInBackground(new FindCallback<Ingredient>() {
                     @Override
                     public void done(List<Ingredient> ingredientList, ParseException e) {
-                        for (Ingredient item: ingredientList) {
+                        for (int i = 0; i < ingredientList.size(); i++) {
+                            Ingredient item = ingredientList.get(i);
                             ingredients.add(item);
+                            inventory_list += item.getName();
+                            if(i != ingredientList.size()-1){
+                                inventory_list += ", ";
+                            }
                         }
                         inventoryAdapter.notifyDataSetChanged();
                     }

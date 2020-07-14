@@ -15,6 +15,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
 import com.example.easygreen.adapters.RecipeAdapter;
+import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Recipe;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -35,26 +36,32 @@ public class RecipeFragment extends Fragment {
 
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes = new ArrayList<>();
+    private List<Ingredient> inventory = new ArrayList<>();
     private RecyclerView rvRecipes;
     public static final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
+    public String inventory_list = "chicken, rice, beans";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            inventory_list = bundle.getString("key");
+        }
 
         inflateViews(view);
-        getRecipes();
+        getRecipes(inventory_list);
         displayRecyclerView(view);
         return view;
     }
 
-    private void getRecipes() {
+    private void getRecipes(String inventory_list) {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
                 .host("api.spoonacular.com")
                 .addPathSegment("recipes")
                 .addPathSegment("findByIngredients")
-                .addQueryParameter("ingredients", "cheese,yogurt,butter,milk")
+                .addQueryParameter("ingredients", inventory_list)
                 .addQueryParameter("number", String.valueOf(6))
                 .build();
 

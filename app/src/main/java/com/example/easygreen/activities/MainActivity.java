@@ -1,12 +1,13 @@
 package com.example.easygreen.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.example.easygreen.R;
 import com.example.easygreen.fragments.DiscoverFragment;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
     private Fragment currentFragment;
+    public String inventory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,36 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.action_inventory){
                     currentFragment = new InventoryFragment();
+
                 } else if (item.getItemId() == R.id.action_recipes){
                     currentFragment = new RecipeFragment();
+
+                    Intent i = getIntent();
+                    Bundle bundle = getIntent().getExtras();
+                    if(bundle != null){
+                        inventory = bundle.getString("inventory");
+                        Bundle bundle2 = new Bundle();
+                        bundle2.putString("key", inventory);
+                        currentFragment.setArguments(bundle2);
+                    }
+
                 } else if (item.getItemId() == R.id.action_shopping_list){
                     currentFragment = new ShoppingListFragment();
+
                 } else if (item.getItemId() == R.id.action_discover){
                     currentFragment = new DiscoverFragment();
                 }
+
                 fragmentManager.beginTransaction().replace(R.id.flContainer, currentFragment).commit();
                 return true;
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.action_inventory);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigationView.setSelectedItemId(R.id.action_recipes);
     }
 }
