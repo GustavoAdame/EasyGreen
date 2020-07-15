@@ -81,11 +81,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 ParseRelation<Ingredient> ingredientRelation = inventories.get(0).getRelation(KEY_inventory_list);
                 ingredientRelation.getQuery().findInBackground(new FindCallback<Ingredient>() {
                     @Override
-                    public void done(List<Ingredient> ingredientList, ParseException e) {
+                    public void done(final List<Ingredient> ingredientList, ParseException e) {
                       ingredientList.get(position).deleteInBackground(new DeleteCallback() {
                           @Override
                           public void done(ParseException e) {
-                              Toast.makeText(context, "DELETE BUTTON CLICKED", Toast.LENGTH_LONG).show();
+                              Toast.makeText(context, ingredientList.get(position).getName() + " Deleted!", Toast.LENGTH_LONG).show();
                           }
                       });
                     }
