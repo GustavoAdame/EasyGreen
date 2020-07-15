@@ -2,16 +2,14 @@ package com.example.easygreen.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseRelation;
 
-import java.util.List;
+import org.json.JSONArray;
 
 
 @ParseClassName("Inventory")
 public class Inventory  extends ParseObject {
     public static final String KEY_objectId = "objectId";
-    public static final String KEY_count = "count";
-    public static final String KEY_inventory_list = "inventory_list";
+    public static final String KEY_ingredient_list = "ingredient_list";
 
     public String getId(){
         return getString(KEY_objectId);
@@ -21,19 +19,11 @@ public class Inventory  extends ParseObject {
         put(KEY_objectId, id);
     }
 
-    public int getCount(){
-        return getInt(KEY_count);
+    public JSONArray getInventory(){
+        return getJSONArray(KEY_ingredient_list);
     }
 
-    public void setCount(int count){
-        put(KEY_count, count);
-    }
-
-    public ParseRelation getInventory(){
-        return getRelation(KEY_inventory_list);
-    }
-
-    public void setInventory(List<Ingredient> ingredients){
-        put(KEY_inventory_list, ingredients);
+    public void setInventory(JSONArray ingredients){
+        put(KEY_ingredient_list, ingredients);
     }
 }

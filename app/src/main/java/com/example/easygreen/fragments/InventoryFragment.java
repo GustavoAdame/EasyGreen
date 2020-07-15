@@ -13,6 +13,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,15 +23,15 @@ import com.example.easygreen.activities.SearchActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Inventory;
-import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.easygreen.models.Inventory.KEY_inventory_list;
 
 public class InventoryFragment extends Fragment {
     private Toolbar toolbar;
@@ -38,6 +39,7 @@ public class InventoryFragment extends Fragment {
     private List<Ingredient> ingredients = new ArrayList<>();
     private RecyclerView rvInventory;
     public String inventory_list = "";
+    private ItemTouchHelper mItemTouchHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,24 +76,24 @@ public class InventoryFragment extends Fragment {
 
     private void getInventory() {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.findInBackground(new FindCallback<Inventory>() {
+        inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
             @Override
-            public void done(List<Inventory> inventories, ParseException e) {
-                ParseRelation<Ingredient> ingredientRelation = inventories.get(0).getRelation(KEY_inventory_list);
-                ingredientRelation.getQuery().findInBackground(new FindCallback<Ingredient>() {
-                    @Override
-                    public void done(List<Ingredient> ingredientList, ParseException e) {
-                        for (int i = 0; i < ingredientList.size(); i++) {
-                            Ingredient item = ingredientList.get(i);
-                            ingredients.add(item);
-                            inventory_list += item.getName();
-                            if(i != ingredientList.size()-1){
-                                inventory_list += ", ";
-                            }
-                        }
-                        inventoryAdapter.notifyDataSetChanged();
+            public void done(Inventory object, ParseException e) {
+                JSONArray inventory = object.getInventory();
+                for (int i = 0; i < inventory.length(); i++) {
+                    Ingredient item = new Ingredient();
+                    try {
+                        item.setName(inventory.getString(i));
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
                     }
-                });
+                    ingredients.add(item);
+                    inventory_list += item.getName();
+                    if (i != inventory.length() - 1) {
+                        inventory_list += ", ";
+                    }
+                    inventoryAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -109,7 +111,7 @@ public class InventoryFragment extends Fragment {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(item.getItemId() == R.id.search){
+                if (item.getItemId() == R.id.search) {
                     Intent i = new Intent(getContext(), SearchActivity.class);
                     startActivity(i);
                 }

@@ -13,22 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easygreen.R;
 import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Inventory;
-import com.parse.DeleteCallback;
-import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.List;
 
-import static com.example.easygreen.models.Inventory.KEY_inventory_list;
-
-public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> {
+public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>{
     public List<Ingredient> ingredients;
     private Context context;
 
     public TextView tvIngredientName;
     public TextView btnIngredientDelete;
+    public RecyclerView rvInventory;
     public int position;
 
     public InventoryAdapter(List<Ingredient> ingredients) {
@@ -54,6 +54,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         return ingredients.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,9 +65,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 @Override
                 public void onClick(View view) {
                     position = getAdapterPosition();
-                    deleteInventory();
                     ingredients.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
+                    deleteInventory();
+                    notifyItemRemoved(position);
                     notifyItemRangeChanged(getAdapterPosition(), ingredients.size());
                 }
             });
@@ -75,22 +76,24 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private void deleteInventory() {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.findInBackground(new FindCallback<Inventory>() {
+        inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
             @Override
-            public void done(List<Inventory> inventories, ParseException e) {
-                ParseRelation<Ingredient> ingredientRelation = inventories.get(0).getRelation(KEY_inventory_list);
-                ingredientRelation.getQuery().findInBackground(new FindCallback<Ingredient>() {
-                    @Override
-                    public void done(final List<Ingredient> ingredientList, ParseException e) {
-                      ingredientList.get(position).deleteInBackground(new DeleteCallback() {
-                          @Override
-                          public void done(ParseException e) {
-                              Toast.makeText(context, ingredientList.get(position).getName() + " Deleted!", Toast.LENGTH_LONG).show();
-                          }
-                      });
-                    }
-                });
+            public void done(Inventory object, ParseException e) {
+                JSONArray inventory = object.getInventory();
+                String ingredientName = "";
+                try {
+                    ingredientName = inventory.getString(position);
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+
+                inventory.remove(position);
+                object.setInventory(inventory);
+                object.saveInBackground();
+                Toast.makeText(context, ingredientName + " Deleted!", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }
+
