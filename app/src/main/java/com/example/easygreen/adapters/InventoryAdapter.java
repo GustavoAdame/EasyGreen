@@ -12,8 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
 import com.example.easygreen.models.Ingredient;
+import com.example.easygreen.models.Inventory;
+import com.parse.DeleteCallback;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import java.util.List;
+
+import static com.example.easygreen.models.Inventory.KEY_inventory_list;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder> {
     public List<Ingredient> ingredients;
@@ -21,6 +29,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     public TextView tvIngredientName;
     public TextView btnIngredientDelete;
+    public int position;
 
     public InventoryAdapter(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
@@ -54,9 +63,34 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             btnIngredientDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "DELETE BUTTON CLICKED", Toast.LENGTH_LONG).show();
+                    position = getAdapterPosition();
+                    deleteInventory();
+                    ingredients.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), ingredients.size());
                 }
             });
         }
+    }
+
+    private void deleteInventory() {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.findInBackground(new FindCallback<Inventory>() {
+            @Override
+            public void done(List<Inventory> inventories, ParseException e) {
+                ParseRelation<Ingredient> ingredientRelation = inventories.get(0).getRelation(KEY_inventory_list);
+                ingredientRelation.getQuery().findInBackground(new FindCallback<Ingredient>() {
+                    @Override
+                    public void done(List<Ingredient> ingredientList, ParseException e) {
+                      ingredientList.get(position).deleteInBackground(new DeleteCallback() {
+                          @Override
+                          public void done(ParseException e) {
+                              Toast.makeText(context, "DELETE BUTTON CLICKED", Toast.LENGTH_LONG).show();
+                          }
+                      });
+                    }
+                });
+            }
+        });
     }
 }

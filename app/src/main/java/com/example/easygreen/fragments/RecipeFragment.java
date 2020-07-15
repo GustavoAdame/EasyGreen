@@ -17,8 +17,6 @@ import com.example.easygreen.R;
 import com.example.easygreen.adapters.RecipeAdapter;
 import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Recipe;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +28,8 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 
 public class RecipeFragment extends Fragment {
-    private ChipGroup cgFilterContainer;
-    private Chip chip1, chip2, chip3;
+//    private ChipGroup cgFilterContainer;
+//    private Chip chip1, chip2, chip3;
     private CardView cvRecipe;
 
     private RecipeAdapter recipeAdapter;
@@ -62,7 +60,9 @@ public class RecipeFragment extends Fragment {
                 .addPathSegment("recipes")
                 .addPathSegment("findByIngredients")
                 .addQueryParameter("ingredients", inventory_list)
-                .addQueryParameter("number", String.valueOf(6))
+                .addQueryParameter("number", String.valueOf(20))
+                .addQueryParameter("ranking", String.valueOf(1))
+                .addQueryParameter("ignorePantry", String.valueOf(true))
                 .build();
 
         String request = url+"&apiKey="+API_Key;
@@ -92,10 +92,10 @@ public class RecipeFragment extends Fragment {
     }
 
     private void inflateViews(View view) {
-        cgFilterContainer = view.findViewById(R.id.cgFilterContainer);
-        chip1 = view.findViewById(R.id.chip1);
-        chip2 = view.findViewById(R.id.chip2);
-        chip3 = view.findViewById(R.id.chip3);
+//        cgFilterContainer = view.findViewById(R.id.cgFilterContainer);
+//        chip1 = view.findViewById(R.id.chip1);
+//        chip2 = view.findViewById(R.id.chip2);
+//        chip3 = view.findViewById(R.id.chip3);
         cvRecipe = view.findViewById(R.id.cvRecipe);
     }
 
