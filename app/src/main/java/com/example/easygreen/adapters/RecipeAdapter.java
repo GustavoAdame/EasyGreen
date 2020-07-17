@@ -42,7 +42,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         String url = item.getURL();
         Glide.with(context).load(url).into(ivRecipeImage);
         tvRecipeTitle.setText(item.getName());
-//      tvRecipeTag.setText("- "+item.getTag()+" -");
     }
 
     @Override

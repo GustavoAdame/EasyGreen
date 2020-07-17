@@ -65,10 +65,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 @Override
                 public void onClick(View view) {
                     position = getAdapterPosition();
-                    ingredients.remove(getAdapterPosition());
                     deleteInventory();
+                    ingredients.remove(position);
                     notifyItemRemoved(position);
-                    notifyItemRangeChanged(getAdapterPosition(), ingredients.size());
+                    notifyItemRangeChanged(position, ingredients.size());
                 }
             });
         }

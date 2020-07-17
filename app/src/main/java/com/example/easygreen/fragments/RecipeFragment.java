@@ -28,8 +28,6 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 
 public class RecipeFragment extends Fragment {
-//    private ChipGroup cgFilterContainer;
-//    private Chip chip1, chip2, chip3;
     private CardView cvRecipe;
 
     private RecipeAdapter recipeAdapter;
@@ -42,13 +40,13 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe, container, false);
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            inventory_list = bundle.getString("key");
+        Bundle fromMainActivity = this.getArguments();
+        if(fromMainActivity != null){
+            inventory_list = fromMainActivity.getString("inventory");
         }
 
         inflateViews(view);
-        getRecipes(inventory_list);
+       // getRecipes(inventory_list);
         displayRecyclerView(view);
         return view;
     }
@@ -66,11 +64,11 @@ public class RecipeFragment extends Fragment {
                 .build();
 
         String request = url+"&apiKey="+API_Key;
-
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d("Gustavo", "SUCCESS");
                 try {
                     for (int i = 0; i < json.jsonArray.length() ; i++) {
                         JSONObject jsonObject = json.jsonArray.getJSONObject(i);
@@ -86,16 +84,12 @@ public class RecipeFragment extends Fragment {
             }
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d("getRecipes()", "Failure");
+                Log.d("Gustavo", response);
             }
         });
     }
 
     private void inflateViews(View view) {
-//        cgFilterContainer = view.findViewById(R.id.cgFilterContainer);
-//        chip1 = view.findViewById(R.id.chip1);
-//        chip2 = view.findViewById(R.id.chip2);
-//        chip3 = view.findViewById(R.id.chip3);
         cvRecipe = view.findViewById(R.id.cvRecipe);
     }
 

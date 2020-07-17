@@ -9,11 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +39,6 @@ public class InventoryFragment extends Fragment {
     private List<Ingredient> ingredients = new ArrayList<>();
     private RecyclerView rvInventory;
     public String inventory_list = "";
-    private ItemTouchHelper mItemTouchHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +53,7 @@ public class InventoryFragment extends Fragment {
         displayToolbar(view);
         getInventory();
         displayRecyclerView(view);
+        updateInventory();
 
         Button btnGetRecipes = view.findViewById(R.id.btnGetRecipes);
         btnGetRecipes.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +66,30 @@ public class InventoryFragment extends Fragment {
         return view;
     }
 
+    private void updateInventory() {
+        Bundle fromMainActivity = this.getArguments();
+        if(fromMainActivity != null){
+            String prev = "";
+            Ingredient item = new Ingredient();
+            try{
+                if(fromMainActivity.getString("newItem") != prev){
+                        item.setName(fromMainActivity.getString("newItem"));
+                        addInventory(item.getName());
+                        ingredients.add(item);
+                        inventoryAdapter.notifyDataSetChanged();
+                        inventory_list += ", " + item.getName();
+                        Toast.makeText(getContext(), item.getName() + " Added!", Toast.LENGTH_LONG).show();
+                }
+            } catch (IllegalArgumentException e){}
+            prev = fromMainActivity.getString("newItem");
+        }
+    }
+
     private void sendDatatoAPI() {
-        Bundle bundle = new Bundle();
-        bundle.putString("inventory", inventory_list);
+        Bundle toMainActivity = new Bundle();
+        toMainActivity.putString("inventory", inventory_list);
         Intent i = new Intent(getContext(), MainActivity.class);
-        i.putExtras(bundle);
+        i.putExtras(toMainActivity);
         startActivity(i);
     }
 
@@ -120,10 +139,22 @@ public class InventoryFragment extends Fragment {
         });
     }
 
+    private void addInventory(final String name) {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
+            @Override
+            public void done(Inventory object, ParseException e) {
+                JSONArray inventory = object.getInventory();
+                inventory.put(name);
+                object.setInventory(inventory);
+                object.saveInBackground();
+            }
+        });
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.inventory_menu, menu);
     }
-
 }

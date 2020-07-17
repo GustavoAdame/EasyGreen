@@ -1,6 +1,5 @@
 package com.example.easygreen.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -19,8 +18,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FragmentManager fragmentManager;
-    private Fragment currentFragment;
+    private Fragment inventoryFragment, recipeFragment;
+    private Fragment shoppingListFragment, discoverFragment;
     public String inventory = "";
+    public String itemAdded = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,38 +33,60 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId() == R.id.action_inventory){
-                    currentFragment = new InventoryFragment();
+                inventoryFragment = new InventoryFragment();
+                recipeFragment = new RecipeFragment();
+                shoppingListFragment = new ShoppingListFragment();
+                discoverFragment = new DiscoverFragment();
 
-                } else if (item.getItemId() == R.id.action_recipes){
-                    currentFragment = new RecipeFragment();
-
-                    Intent i = getIntent();
-                    Bundle bundle = getIntent().getExtras();
-                    if(bundle != null){
-                        inventory = bundle.getString("inventory");
-                        Bundle bundle2 = new Bundle();
-                        bundle2.putString("key", inventory);
-                        currentFragment.setArguments(bundle2);
-                    }
-
-                } else if (item.getItemId() == R.id.action_shopping_list){
-                    currentFragment = new ShoppingListFragment();
-
-                } else if (item.getItemId() == R.id.action_discover){
-                    currentFragment = new DiscoverFragment();
+                if (item.getItemId() == R.id.action_inventory) {
+                    getItem(inventoryFragment);
+                    fragmentManager.beginTransaction().replace(R.id.flContainer, inventoryFragment).commit();
+                } else if (item.getItemId() == R.id.action_recipes) {
+                    passInventory(recipeFragment);
+                    fragmentManager.beginTransaction().replace(R.id.flContainer, recipeFragment).commit();
+                } else if (item.getItemId() == R.id.action_shopping_list) {
+                    fragmentManager.beginTransaction().replace(R.id.flContainer, shoppingListFragment).commit();
+                } else if (item.getItemId() == R.id.action_discover) {
+                    fragmentManager.beginTransaction().replace(R.id.flContainer, discoverFragment).commit();
                 }
-
-                fragmentManager.beginTransaction().replace(R.id.flContainer, currentFragment).commit();
                 return true;
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_inventory);
+        bottomNavigationView.setSelectedItemId(R.id.action_recipes);
+
+        if(getItem(inventoryFragment)){
+            bottomNavigationView.setSelectedItemId(R.id.action_inventory);
+        } else if(passInventory(recipeFragment)){
+            bottomNavigationView.setSelectedItemId(R.id.action_recipes);
+        }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bottomNavigationView.setSelectedItemId(R.id.action_recipes);
+    public boolean passInventory(Fragment recipeFragment){
+        Bundle fromInventoryFragment = getIntent().getExtras();
+        if(fromInventoryFragment != null){
+            inventory = fromInventoryFragment.getString("inventory");
+            if (inventory != null) {
+                Bundle toRecipeFragment = new Bundle();
+                toRecipeFragment.putString("inventory", inventory);
+                recipeFragment.setArguments(toRecipeFragment);
+                return true;
+            }
+        }
+        return false;
     }
+
+    public boolean getItem(Fragment inventoryFragment){
+        Bundle fromGroupAdapter = getIntent().getExtras();
+        if(fromGroupAdapter != null){
+            itemAdded = fromGroupAdapter.getString("newItem");
+            if (itemAdded != null) {
+                Bundle toInventoryFragment = new Bundle();
+                toInventoryFragment.putString("newItem", itemAdded);
+                inventoryFragment.setArguments(toInventoryFragment);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
