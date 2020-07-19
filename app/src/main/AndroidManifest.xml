@@ -22,7 +22,6 @@
         <activity android:name=".activities.groups.VegetableActivity" />
         <activity android:name=".activities.groups.FruitActivity" />
         <activity android:name=".activities.groups.DairyActivity" />
-        <activity android:name=".activities.SearchActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

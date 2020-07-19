@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,29 +29,46 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 
 public class RecipeFragment extends Fragment {
+    /******** Local Variable ************************/
     private CardView cvRecipe;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes = new ArrayList<>();
     private RecyclerView rvRecipes;
-    public static final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
-    public String inventory_list = "chicken, rice, beans";
+    /******** Defaults ************************/
+    public final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
+    public String inventory_list = "Chicken Breast, Brown Rice, Black Beans, Queso Fresco";
 
+    /************* Initial State of Fragment ********************/
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        inflateViews(getActivity());
         Bundle fromMainActivity = this.getArguments();
         if(fromMainActivity != null){
             inventory_list = fromMainActivity.getString("inventory");
         }
-
-        inflateViews(view);
-        //getRecipes(inventory_list);
-        displayRecyclerView(view);
-        return view;
+        getRecipes(inventory_list);
+        displayRecyclerView(getActivity());
     }
 
+    /***************** Inflating Views and RecyclerView *****************/
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_recipe, container, false);
+    }
+    private void inflateViews(FragmentActivity view) {
+        cvRecipe = view.findViewById(R.id.cvRecipe);
+    }
+
+    private void displayRecyclerView(FragmentActivity view) {
+        rvRecipes = view.findViewById(R.id.rvRecipes);
+        recipeAdapter = new RecipeAdapter(recipes);
+        rvRecipes.setAdapter(recipeAdapter);
+        rvRecipes.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    }
+
+    /***************** Getting 20 recipes from API *****************/
     public void getRecipes(String inventory_list) {
-        Log.d("Gustavo", "getRecipes: Entered");
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
                 .host("api.spoonacular.com")
@@ -81,19 +100,8 @@ public class RecipeFragment extends Fragment {
             }
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d("Gustavo", response);
+                Log.d("getRecipes()", response);
             }
         });
-    }
-
-    private void inflateViews(View view) {
-        cvRecipe = view.findViewById(R.id.cvRecipe);
-    }
-
-    private void displayRecyclerView(View view) {
-        rvRecipes = view.findViewById(R.id.rvRecipes);
-        recipeAdapter = new RecipeAdapter(recipes);
-        rvRecipes.setAdapter(recipeAdapter);
-        rvRecipes.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 }

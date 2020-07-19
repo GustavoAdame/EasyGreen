@@ -17,17 +17,15 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>{
-    public List<String> ingredients;
+    private List<String> ingredients;
     private Context context;
 
-    public TextView tvIngredientName;
-    public TextView btnIngredientDelete;
-    public int position;
+    private TextView tvIngredientName;
+    private TextView btnIngredientDelete;
 
     public InventoryAdapter(List<String> ingredients) {
         this.ingredients = ingredients;
@@ -51,7 +49,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         return ingredients.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,36 +58,26 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             btnIngredientDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    position = getAdapterPosition();
-                    deleteInventory();
-                    ingredients.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, ingredients.size());
+                    deleteItemInventory(getAdapterPosition());
+                    Toast.makeText(context, ingredients.get(getAdapterPosition()) + " Deleted!", Toast.LENGTH_SHORT).show();
+                    ingredients.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
                 }
             });
         }
     }
 
-    private void deleteInventory() {
+    private void deleteItemInventory(final int position) {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
         inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
             @Override
             public void done(Inventory object, ParseException e) {
                 JSONArray inventory = object.getInventory();
-                String ingredientName = "";
-                try {
-                    ingredientName = inventory.getString(position);
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                }
-
                 inventory.remove(position);
                 object.setInventory(inventory);
                 object.saveInBackground();
-                Toast.makeText(context, ingredientName + " Deleted!", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
 
