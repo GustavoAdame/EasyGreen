@@ -1,11 +1,13 @@
 package com.example.easygreen.models;
 
 
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 @ParseClassName("Ingredient")
-public class Ingredient extends ParseObject {
+public class Ingredient extends ParseObject implements Parcelable {
     public static final String KEY_ingredient_name = "ingredient_name";
     public static final String KEY_group = "group";
 

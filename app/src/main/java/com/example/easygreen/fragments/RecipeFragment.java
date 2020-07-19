@@ -15,7 +15,6 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
 import com.example.easygreen.adapters.RecipeAdapter;
-import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Recipe;
 
 import org.json.JSONException;
@@ -29,10 +28,8 @@ import okhttp3.HttpUrl;
 
 public class RecipeFragment extends Fragment {
     private CardView cvRecipe;
-
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes = new ArrayList<>();
-    private List<Ingredient> inventory = new ArrayList<>();
     private RecyclerView rvRecipes;
     public static final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
     public String inventory_list = "chicken, rice, beans";
@@ -46,12 +43,13 @@ public class RecipeFragment extends Fragment {
         }
 
         inflateViews(view);
-       // getRecipes(inventory_list);
+        //getRecipes(inventory_list);
         displayRecyclerView(view);
         return view;
     }
 
-    private void getRecipes(String inventory_list) {
+    public void getRecipes(String inventory_list) {
+        Log.d("Gustavo", "getRecipes: Entered");
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
                 .host("api.spoonacular.com")
@@ -63,12 +61,11 @@ public class RecipeFragment extends Fragment {
                 .addQueryParameter("ignorePantry", String.valueOf(true))
                 .build();
 
-        String request = url+"&apiKey="+API_Key;
+        final String request = url+"&apiKey="+API_Key;
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d("Gustavo", "SUCCESS");
                 try {
                     for (int i = 0; i < json.jsonArray.length() ; i++) {
                         JSONObject jsonObject = json.jsonArray.getJSONObject(i);
@@ -76,7 +73,7 @@ public class RecipeFragment extends Fragment {
                         item.setName(jsonObject.getString("title"));
                         item.setURL(jsonObject.getString("image"));
                         recipes.add(item);
-                    }
+                    };
                     recipeAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();

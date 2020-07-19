@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
-import com.example.easygreen.models.Ingredient;
 import com.example.easygreen.models.Inventory;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -23,15 +22,14 @@ import org.json.JSONException;
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>{
-    public List<Ingredient> ingredients;
+    public List<String> ingredients;
     private Context context;
 
     public TextView tvIngredientName;
     public TextView btnIngredientDelete;
-    public RecyclerView rvInventory;
     public int position;
 
-    public InventoryAdapter(List<Ingredient> ingredients) {
+    public InventoryAdapter(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -45,8 +43,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Ingredient item = ingredients.get(position);
-        tvIngredientName.setText(item.getName());
+        tvIngredientName.setText(ingredients.get(position));
     }
 
     @Override

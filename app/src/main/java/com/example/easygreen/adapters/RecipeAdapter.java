@@ -19,7 +19,6 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     public List<Recipe> recipes;
     private Context context;
-
     public ImageView ivRecipeImage;
     public TextView tvRecipeTag;
     public TextView tvRecipeTitle;
@@ -52,7 +51,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             tvRecipeTitle = itemView.findViewById(R.id.tvRecipeTitle);
             tvRecipeTag = itemView.findViewById(R.id.tvRecipeTag);
             ivRecipeImage = itemView.findViewById(R.id.ivRecipeImage);

@@ -20,7 +20,6 @@ import java.util.List;
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder>  {
     public List<Ingredient> ingredients;
     private Context context;
-
     public TextView tvIngredientName;
     public TextView btnIngredientAdd;
 

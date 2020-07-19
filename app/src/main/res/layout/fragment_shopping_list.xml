@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragments.ShoppingListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SHOPPING LIST" />
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="?attr/colorPrimary">
+
+            <TextView
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:text="Shopping List"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarAdd"
+            android:layout_below="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary">
+
+            <EditText
+                android:id="@+id/addItem"
+                android:hint="Add item"
+                android:textColorHint="@android:color/black"
+                android:textColor="@android:color/black"
+                android:background="@android:color/white"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:singleLine="true"/>
+
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:text="Add"
+                android:backgroundTint="@android:color/black"
+                android:layout_width="wrap_content"
+                android:clickable="true"
+                android:layout_height="50dp"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tvTitleShopping"
+            android:layout_below="@+id/toolbarAdd"
+            android:layout_margin="8dp"
+            android:text="What's in my List"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvShoppingList"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/tvTitleShopping"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </RelativeLayout>
 
 </FrameLayout>
