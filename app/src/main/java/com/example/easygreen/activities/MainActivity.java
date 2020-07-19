@@ -16,52 +16,66 @@ import com.example.easygreen.fragments.ShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private BottomNavigationView bottomNavigationView;
-    private FragmentManager fragmentManager;
-    private Fragment inventoryFragment, recipeFragment;
-    private Fragment shoppingListFragment, discoverFragment;
     public String inventory = "";
     public String itemAdded = "";
+
+    final Fragment inventoryFragment = new InventoryFragment();
+    final Fragment recipeFragment = new RecipeFragment();
+    final Fragment shoppingListFragment = new ShoppingListFragment();
+    final Fragment discoverFragment = new DiscoverFragment();
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    Fragment active = recipeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        fragmentManager = getSupportFragmentManager();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                inventoryFragment = new InventoryFragment();
-                recipeFragment = new RecipeFragment();
-                shoppingListFragment = new ShoppingListFragment();
-                discoverFragment = new DiscoverFragment();
-
-                if (item.getItemId() == R.id.action_inventory) {
-                    getItem(inventoryFragment);
-                    fragmentManager.beginTransaction().replace(R.id.flContainer, inventoryFragment).commit();
-                } else if (item.getItemId() == R.id.action_recipes) {
-                    passInventory(recipeFragment);
-                    fragmentManager.beginTransaction().replace(R.id.flContainer, recipeFragment).commit();
-                } else if (item.getItemId() == R.id.action_shopping_list) {
-                    fragmentManager.beginTransaction().replace(R.id.flContainer, shoppingListFragment).commit();
-                } else if (item.getItemId() == R.id.action_discover) {
-                    fragmentManager.beginTransaction().replace(R.id.flContainer, discoverFragment).commit();
-                }
-                return true;
-            }
-        });
-        bottomNavigationView.setSelectedItemId(R.id.action_recipes);
-
-        if(getItem(inventoryFragment)){
+        if(getItem()){
             bottomNavigationView.setSelectedItemId(R.id.action_inventory);
-        } else if(passInventory(recipeFragment)){
+        } else if(passInventory()){
             bottomNavigationView.setSelectedItemId(R.id.action_recipes);
         }
+
+        fragmentManager.beginTransaction().add(R.id.flContainer, discoverFragment, "3").hide(discoverFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, shoppingListFragment, "3").hide(shoppingListFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, inventoryFragment, "2").hide(inventoryFragment).commit();
+        bottomNavigationView.setSelectedItemId(R.id.action_recipes);
+        fragmentManager.beginTransaction().add(R.id.flContainer, recipeFragment, "1").commit();
     }
 
-    public boolean passInventory(Fragment recipeFragment){
+    BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+         @Override
+         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+             switch (item.getItemId()) {
+                 case R.id.action_inventory:
+                     fragmentManager.beginTransaction().hide(active).show(inventoryFragment).commit();
+                     active = inventoryFragment;
+                     return true;
+
+                 case R.id.action_recipes:
+                     fragmentManager.beginTransaction().hide(active).show(recipeFragment).commit();
+                     active = recipeFragment;
+                     return true;
+
+                 case R.id.action_shopping_list:
+                     fragmentManager.beginTransaction().hide(active).show(shoppingListFragment).commit();
+                     active = shoppingListFragment;
+                     return true;
+
+                 case R.id.action_discover:
+                     fragmentManager.beginTransaction().hide(active).show(discoverFragment).commit();
+                     active = discoverFragment;
+                     return true;
+             }
+             return false;
+         }
+     };
+
+
+    public boolean passInventory(){
         Bundle fromInventoryFragment = getIntent().getExtras();
         if(fromInventoryFragment != null){
             inventory = fromInventoryFragment.getString("inventory");
@@ -75,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public boolean getItem(Fragment inventoryFragment){
+    public boolean getItem(){
         Bundle fromGroupAdapter = getIntent().getExtras();
         if(fromGroupAdapter != null){
             itemAdded = fromGroupAdapter.getString("newItem");
