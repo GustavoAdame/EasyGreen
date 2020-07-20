@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,7 +29,6 @@ import okhttp3.HttpUrl;
 
 public class RecipeFragment extends Fragment {
     /******** Local Variable ************************/
-    private CardView cvRecipe;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes = new ArrayList<>();
     private RecyclerView rvRecipes;
@@ -42,7 +40,6 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        inflateViews(getActivity());
         Bundle fromMainActivity = this.getArguments();
         if(fromMainActivity != null){
             inventory_list = fromMainActivity.getString("inventory");
@@ -55,9 +52,6 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recipe, container, false);
-    }
-    private void inflateViews(FragmentActivity view) {
-        cvRecipe = view.findViewById(R.id.cvRecipe);
     }
 
     private void displayRecyclerView(FragmentActivity view) {
@@ -89,6 +83,7 @@ public class RecipeFragment extends Fragment {
                     for (int i = 0; i < json.jsonArray.length() ; i++) {
                         JSONObject jsonObject = json.jsonArray.getJSONObject(i);
                         Recipe item = new Recipe();
+                        item.setRecipe_id(jsonObject.getString("id"));
                         item.setName(jsonObject.getString("title"));
                         item.setURL(jsonObject.getString("image"));
                         recipes.add(item);

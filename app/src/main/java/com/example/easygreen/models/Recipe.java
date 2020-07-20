@@ -2,10 +2,19 @@ package com.example.easygreen.models;
 
 
 public class Recipe {
+    public String recipe_id = "";
     public String recipe_name = "";
     public String recipe_imageURL = "";
     public String recipe_tag = "";
     public String recipe_description = "";
+
+    public String getRecipe_id() {
+        return recipe_id;
+    }
+
+    public void setRecipe_id(String recipe_id) {
+        this.recipe_id = recipe_id;
+    }
 
     public String getName(){
         return recipe_name;
