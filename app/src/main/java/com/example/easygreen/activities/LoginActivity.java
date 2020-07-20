@@ -1,11 +1,11 @@
 package com.example.easygreen.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easygreen.R;
 import com.facebook.AccessToken;
@@ -20,10 +20,6 @@ import com.facebook.login.widget.LoginButton;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-
-    /**
-     * TODO: Figure out the best time to logout - LoginManager.getInstance().logOut();
-     */
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
@@ -71,18 +67,20 @@ public class LoginActivity extends AppCompatActivity {
         if (isLoggedIn){
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
-            finish();
         } else {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
-            finish();
         }
     }
 
-    public void startApp(View view) {
-        Intent i = new Intent(this, MainActivity.class);
+    public void loginPage(View view) {
+        Intent i = new Intent(this, UserLoginActivity.class);
         startActivity(i);
-        finish();
+    }
+
+    public void signUp(View view) {
+        Intent i = new Intent(this, UserSignupActivity.class);
+        startActivity(i);
     }
 }

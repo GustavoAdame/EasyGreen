@@ -22,7 +22,6 @@ public class ShoppingListFragment extends Fragment {
     private RecyclerView rvShoppingList;
     private ShoppingAdapter shoppingAdapter;
     private List<String> items = new ArrayList<>();
-    private List<String> discard = new ArrayList<>();
     private EditText addItem;
     private Button btnAdd;
     private String item;
@@ -43,8 +42,8 @@ public class ShoppingListFragment extends Fragment {
             public void onClick(View view) {
                 item = addItem.getText().toString();
                 items.add(item);
-                addItem.setText("");
                 shoppingAdapter.notifyDataSetChanged();
+                addItem.setText("");
             }
         });
         return view;

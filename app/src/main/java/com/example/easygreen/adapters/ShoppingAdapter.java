@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,16 +31,8 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         cbSelect.setText(items.get(position));
-        cbSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(cbSelect.isChecked()){
-                    cbSelect.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     @Override
@@ -53,6 +44,14 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cbSelect = itemView.findViewById(R.id.cbSelect);
+            cbSelect.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    items.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    return true;
+                }
+            });
         }
     }
 

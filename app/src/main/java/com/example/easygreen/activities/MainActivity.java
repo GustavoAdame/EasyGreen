@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.easygreen.R;
+import com.example.easygreen.fragments.AccountFragment;
 import com.example.easygreen.fragments.DiscoverFragment;
 import com.example.easygreen.fragments.InventoryFragment;
 import com.example.easygreen.fragments.RecipeFragment;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     final Fragment recipeFragment = new RecipeFragment();
     final Fragment shoppingListFragment = new ShoppingListFragment();
     final Fragment discoverFragment = new DiscoverFragment();
+    final Fragment accountFragment = new AccountFragment();
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment active = recipeFragment;
 
@@ -39,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.action_recipes);
         }
 
-        fragmentManager.beginTransaction().add(R.id.flContainer, discoverFragment, "3").hide(discoverFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, accountFragment, "5").hide(accountFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.flContainer, discoverFragment, "4").hide(discoverFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, shoppingListFragment, "3").hide(shoppingListFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, inventoryFragment, "2").hide(inventoryFragment).commit();
+
         bottomNavigationView.setSelectedItemId(R.id.action_recipes);
         fragmentManager.beginTransaction().add(R.id.flContainer, recipeFragment, "1").commit();
     }
@@ -68,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
                  case R.id.action_discover:
                      fragmentManager.beginTransaction().hide(active).show(discoverFragment).commit();
                      active = discoverFragment;
+                     return true;
+
+                 case R.id.action_account:
+                     fragmentManager.beginTransaction().hide(active).show(accountFragment).commit();
+                     active = accountFragment;
                      return true;
              }
              return false;

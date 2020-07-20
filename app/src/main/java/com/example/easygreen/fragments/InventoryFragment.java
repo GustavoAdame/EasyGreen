@@ -22,9 +22,10 @@ import com.example.easygreen.R;
 import com.example.easygreen.activities.MainActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.models.Inventory;
-import com.parse.GetCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,25 +104,27 @@ public class InventoryFragment extends Fragment {
     /*********** Get initial inventory from database ******************/
     private void getInventory() {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
             @Override
-            public void done(Inventory object, ParseException e) {
-                JSONArray inventory = object.getInventory();
-                for (int i = 0; i < inventory.length(); i++) {
-                    try {
-                        ingredients.add(inventory.getString(i));
-                        inventory_list += inventory.getString(i);
-                        if (i != inventory.length() - 1) {
-                            inventory_list += ", ";
+            public void done(List<Inventory> objects, ParseException e) {
+                    JSONArray inventory = objects.get(0).getInventory();
+                    for (int i = 0; i < inventory.length(); i++) {
+                        try {
+                            ingredients.add(inventory.getString(i));
+                            inventory_list += inventory.getString(i);
+                            if (i != inventory.length() - 1) {
+                                inventory_list += ", ";
+                            }
+                            inventoryAdapter.notifyDataSetChanged();
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
                         }
-                        inventoryAdapter.notifyDataSetChanged();
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
                     }
                 }
-            }
         });
     }
+
 
     /****** Update changes to database and application ****************************/
     private void updateInventory(String item) {
@@ -134,13 +137,14 @@ public class InventoryFragment extends Fragment {
 
     private void addInventory(final String name) {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
             @Override
-            public void done(Inventory object, ParseException e) {
-                JSONArray inventory = object.getInventory();
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray inventory = objects.get(0).getInventory();
                 inventory.put(name);
-                object.setInventory(inventory);
-                object.saveInBackground();
+                objects.get(0).setInventory(inventory);
+                objects.get(0).saveInBackground();
             }
         });
     }

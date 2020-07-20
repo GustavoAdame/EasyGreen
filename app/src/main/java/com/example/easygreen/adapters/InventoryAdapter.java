@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
 import com.example.easygreen.models.Inventory;
-import com.parse.GetCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
@@ -69,13 +70,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     private void deleteItemInventory(final int position) {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.getInBackground("RvLPR6mg7x", new GetCallback<Inventory>() {
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
             @Override
-            public void done(Inventory object, ParseException e) {
-                JSONArray inventory = object.getInventory();
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray inventory = objects.get(0).getInventory();
                 inventory.remove(position);
-                object.setInventory(inventory);
-                object.saveInBackground();
+                objects.get(0).setInventory(inventory);
+                objects.get(0).saveInBackground();
             }
         });
     }

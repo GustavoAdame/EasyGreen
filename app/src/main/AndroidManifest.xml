@@ -14,17 +14,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/recipe_example_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.RecipeDetailsActivity"></activity>
-        <activity android:name=".activities.groups.SeafoodActivity" />
-        <activity android:name=".activities.groups.MeatActivity" />
-        <activity android:name=".activities.groups.GrainActivity" />
-        <activity android:name=".activities.groups.VegetableActivity" />
-        <activity android:name=".activities.groups.FruitActivity" />
-        <activity android:name=".activities.groups.DairyActivity" />
+        <activity android:name=".activities.UserSignupActivity"></activity>
+        <activity android:name=".activities.UserLoginActivity" />
+        <activity android:name=".activities.RecipeDetailsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

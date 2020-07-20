@@ -5,9 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#639a67"
+    android:background="@drawable/loginbackground2"
     android:textAlignment="center"
     tools:context=".activities.LoginActivity">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="44dp"
+        android:layout_height="46dp"
+        android:layout_alignLeft="@+id/tvAppName"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/noun_leaf_3435075" />
 
     <TextView
         android:id="@+id/tvAppName"
@@ -19,8 +28,9 @@
         android:layout_marginTop="100dp"
         android:text="@string/easygreen"
         android:textAllCaps="false"
+        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         android:textSize="36sp" />
 
     <TextView
@@ -32,28 +42,32 @@
         android:layout_marginTop="200dp"
         android:layout_marginBottom="-38dp"
         android:text="@string/committed_to_be_green"
-        android:textColor="#FFFFFF"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="italic" />
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="44dp"
-        android:layout_height="46dp"
-        android:layout_alignLeft="@+id/tvAppName"
-        android:layout_marginLeft="-50dp"
-        android:layout_marginTop="100dp"
-        app:srcCompat="@android:drawable/ic_menu_week" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvMotto"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        android:backgroundTint="@android:color/black"
+        android:onClick="loginPage"
+        android:text="Log in with EasyGreen"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
+
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btnFBLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvMotto"
+        android:layout_alignTop="@+id/btnLogin"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="-157dp"
+        android:layout_marginTop="75dp"
         android:onClick="openFB" />
 
     <TextView
@@ -69,15 +83,15 @@
         android:textSize="18sp" />
 
     <Button
-        android:id="@+id/btnNoLogin"
+        android:id="@+id/btnSignUp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvOr"
-        android:onClick="startApp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:backgroundTint="@android:color/white"
-        android:text="@string/skip_to_start"
+        android:onClick="signUp"
+        android:text="Sign up"
         android:textAllCaps="false"
         android:textColor="@android:color/black" />
 
