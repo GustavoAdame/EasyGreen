@@ -79,7 +79,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     JSONObject nutrients = nutrition.getJSONArray("nutrients").getJSONObject(0);
                     String calories = nutrients.getString("amount");
                     tvCalorieServing.setText(calories);
-                    tvRecipeDescription.setText(jsonObject.getString("instructions"));
+                    tvRecipeDescription.setText(jsonObject.getString("instructions").replaceAll("\\.","\n"));
                     tvRecipeDescription.setMovementMethod(new ScrollingMovementMethod());
 
                 } catch (JSONException e) {
