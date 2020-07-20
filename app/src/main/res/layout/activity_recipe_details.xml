@@ -7,10 +7,10 @@
     tools:context=".activities.RecipeDetailsActivity">
 
     <ImageView
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:id="@+id/ivRecipeImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:scaleType="fitCenter"/>
 
     <TextView
@@ -131,6 +131,7 @@
         android:layout_below="@id/llRecipeContainer"
         android:textSize="14dp"
         android:textStyle="bold"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

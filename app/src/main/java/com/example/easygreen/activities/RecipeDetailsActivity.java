@@ -2,6 +2,7 @@ package com.example.easygreen.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,6 +80,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     String calories = nutrients.getString("amount");
                     tvCalorieServing.setText(calories);
                     tvRecipeDescription.setText(jsonObject.getString("instructions"));
+                    tvRecipeDescription.setMovementMethod(new ScrollingMovementMethod());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
