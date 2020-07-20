@@ -24,10 +24,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private ImageView ivRecipeImage;
     private TextView tvRecipeTitle, tvRecipeDescription;
     private TextView tvPreptime, tvServingSize, tvCalorieServing;
+
     /******** Defaults ************************/
     public final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
     private String recipeID = "";
 
+    /************* Initial State of Activity ********************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     }
 
+    /***************** Inflating Views *****************/
     private void displayViews() {
         ivRecipeImage = findViewById(R.id.ivRecipeImage);
         tvRecipeTitle = findViewById(R.id.tvRecipeTitle);
@@ -50,9 +53,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         tvCalorieServing = findViewById(R.id.tvCalorieServing);
     }
 
-    /***************** Inflating Views *****************/
 
-    /***************** Getting 20 recipes from API *****************/
+
+    /***************** Get more details for a recipe *****************/
     public void getRecipeDetails(String recipeId) {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
