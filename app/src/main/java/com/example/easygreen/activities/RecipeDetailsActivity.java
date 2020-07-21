@@ -2,7 +2,9 @@ package com.example.easygreen.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,8 +43,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             recipeID = intent.getStringExtra("id");
         }
         getRecipeDetails(recipeID);
+        getRecipeInstruction(recipeID);
 
     }
+
+
 
     /***************** Inflating Views *****************/
     private void displayViews() {
@@ -80,8 +86,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     JSONObject nutrients = nutrition.getJSONArray("nutrients").getJSONObject(0);
                     String calories = nutrients.getString("amount");
                     tvCalorieServing.setText(calories);
-                    tvRecipeDescription.setText(jsonObject.getString("instructions").replaceAll("\\.","\n"));
-                    tvRecipeDescription.setMovementMethod(new ScrollingMovementMethod());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -91,5 +95,43 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
             }
         });
+    }
+
+    /***************** Get recipe instruction *****************/
+    private void getRecipeInstruction(String recipeID) {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("https")
+                .host("api.spoonacular.com")
+                .addPathSegment("recipes")
+                .addPathSegment(recipeID)
+                .addQueryParameter("stepBreakdown", String.valueOf(false))
+                .addPathSegment("analyzedInstructions")
+                .build();
+
+        final String request = url+"&apiKey="+API_Key;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(request, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONArray jsonArray = json.jsonArray;
+                try {
+                    JSONArray steps = jsonArray.getJSONObject(0).getJSONArray("steps");
+                    String instruction = "";
+                    for(int i = 0; i < steps.length(); i++){
+                        String stepNumber = steps.getJSONObject(i).getString("number");
+                        String stepInstruction = steps.getJSONObject(i).getString("step");
+                        instruction = "Step " + stepNumber + ". " + stepInstruction + "\n";
+                    }
+                    tvRecipeDescription.setText(instruction);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                tvRecipeDescription.setMovementMethod(new ScrollingMovementMethod());
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+            }
+        });
+
     }
 }
