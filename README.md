@@ -28,7 +28,6 @@ EasyGreen is a fun and intuitive way for people to manage their food and waste b
 * A discover feed within the app that allow other users to share their 10 second videos of meals or other related topics 
 * Set reminders when an item is about to expire  
 
-
 **Sources:**
 https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-america
 
@@ -76,17 +75,13 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 * Login Screen 
    * Login and Sign up for a EasyGreen account 
-   
 * Inventory Screen 
     * User can search for an ingredient, given suggestions
-
 * Recipes Screen
     * User can see 20 recipes based on inventory
     * User can click on a recipe and get more details such as instructions and prep time
-
 * Shopping List Screen 
     * User can type anything and creates a list of items 
-
 * Discover Screen 
    * In progress
  
@@ -109,7 +104,7 @@ GIF created with [KAP](https://getkap.co/)
 </p> 
 
 ## Schema 
-<br> **User** *(username, firstName, lastName, profileImage)*
+**User** *(username, firstName, lastName, profileImage)*
 <br> **Inventory** *(ingredient_list, **User**\*)*
 
 ### Networking
