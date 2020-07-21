@@ -1,6 +1,9 @@
 package com.example.easygreen.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +13,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easygreen.R;
+import com.example.easygreen.models.User;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import org.json.JSONArray;
+
+import java.io.ByteArrayOutputStream;
+
+import static com.parse.ParseUser.getCurrentUser;
 
 public class UserSignupActivity extends AppCompatActivity {
     /***** Local Variables **********/
@@ -29,6 +38,7 @@ public class UserSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_signup);
         displayViews();
 
+        user.getCurrentUser().logOut();
         /***** User clicks on [Sign Up] ********/
         user = new ParseUser();
         btnUserSignUp.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +73,7 @@ public class UserSignupActivity extends AppCompatActivity {
                         startActivity(i);
                     }
                 } else{
-                    Toast.makeText(UserSignupActivity.this, "Account already exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserSignupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
