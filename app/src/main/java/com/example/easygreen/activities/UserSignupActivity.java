@@ -37,14 +37,15 @@ public class UserSignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_signup);
         displayViews();
-
         user.getCurrentUser().logOut();
+
         /***** User clicks on [Sign Up] ********/
         user = new ParseUser();
         btnUserSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userSignup();
+                userSignup(etUsername.getText().toString(),etPassword.getText().toString(),
+                        etFirstName.getText().toString(),etLastName.getText().toString());
             }
         });
     }
@@ -59,24 +60,31 @@ public class UserSignupActivity extends AppCompatActivity {
     }
 
     /**** Create a EasyGreen account via ParseUser *****/
-    public void userSignup() {
-        user.setUsername(etUsername.getText().toString());
-        user.setPassword(etPassword.getText().toString());
-        user.put("firstName", etFirstName.getText().toString());
-        user.put("lastName", etLastName.getText().toString());
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    if(createInventory() && createShoppingList()){
-                        Toast.makeText(UserSignupActivity.this, "Login into new Account", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(i);
+    public void userSignup(String username, String password, String firstName, String lastName) {
+        if(username == null || password == null || firstName == null || lastName == null){
+            Toast.makeText(getApplicationContext(), "Input fields cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+
+        } else{
+            user.setUsername(username.replaceAll("\\s+",""));
+            user.setPassword(password);
+            user.put("firstName", firstName.replaceAll("\\s+",""));
+            user.put("lastName", lastName.replaceAll("\\s+",""));
+            user.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        if(createInventory() && createShoppingList()){
+                            Toast.makeText(UserSignupActivity.this, "Login into new Account", Toast.LENGTH_SHORT).show();
+                            goLoginActivity();
+                        } else{
+                            return;
+                        }
+                    } else{
+                        Toast.makeText(UserSignupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                } else{
-                    Toast.makeText(UserSignupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        }
     }
 
     /****** Create a Inventory model for User ************/
@@ -111,5 +119,9 @@ public class UserSignupActivity extends AppCompatActivity {
         return false;
     }
 
-
+    /***** Intents to another screens **************/
+    private void goLoginActivity() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
 }

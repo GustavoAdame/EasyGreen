@@ -63,24 +63,36 @@ public class LoginActivity extends AppCompatActivity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if (isLoggedIn){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            goMainActivity();
         } else {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            goMainActivity();
         }
     }
 
     /***** User clicks on [Login with Easy Green] ****************/
     public void loginPage(View view) {
-        Intent i = new Intent(this, UserLoginActivity.class);
-        startActivity(i);
+        goUserLoginActivity();
     }
 
     /***** User clicks on [Sign up] ****************/
     public void signUp(View view) {
-        Intent i = new Intent(this, UserSignupActivity.class);
-        startActivity(i);
+        goUserSignupActivity();
+    }
+
+    /***** Intents to another screens ****************/
+    private void goMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
+    private void goUserLoginActivity() {
+        startActivity(new Intent(this, UserLoginActivity.class));
+        finish();
+    }
+
+    private void goUserSignupActivity() {
+        startActivity(new Intent(this, UserSignupActivity.class));
+        finish();
     }
 }

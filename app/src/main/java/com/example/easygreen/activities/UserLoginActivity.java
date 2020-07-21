@@ -31,7 +31,7 @@ public class UserLoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userLogin();
+                userLogin(etUsername.getText().toString(), etPassword.getText().toString());
             }
         });
     }
@@ -44,16 +44,26 @@ public class UserLoginActivity extends AppCompatActivity {
     }
 
     /***** EasyGreen Login Verification *********/
-    public void userLogin() {
-        ParseUser.logInInBackground(etUsername.getText().toString(), etPassword.getText().toString(), new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                   Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                   startActivity(i);
-                } else {
-                    Toast.makeText(UserLoginActivity.this, "Username or Password is not correct", Toast.LENGTH_SHORT).show();
+    public void userLogin(String username, String password) {
+        if(username == null || password == null){
+            Toast.makeText(getApplicationContext(), "Input fields cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            ParseUser.logInInBackground(username.replaceAll("\\s+", ""), password, new LogInCallback() {
+                public void done(ParseUser user, ParseException e) {
+                    if (user != null) {
+                        goMainActivity();
+                    } else {
+                        Toast.makeText(UserLoginActivity.this, "Username or Password is not correct", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+
+    /***** Intents to another screens **************/
+    private void goMainActivity() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
     }
 }
