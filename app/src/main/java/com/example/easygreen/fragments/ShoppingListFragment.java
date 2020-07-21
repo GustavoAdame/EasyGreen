@@ -100,7 +100,7 @@ public class ShoppingListFragment extends Fragment {
             }
         });
     }
-    
+
     /****** Update changes to database and application ****************************/
     private void updateShoppingList(String item) {
         addShoppingList(item);
