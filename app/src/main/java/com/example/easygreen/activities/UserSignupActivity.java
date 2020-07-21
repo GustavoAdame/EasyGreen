@@ -52,7 +52,7 @@ public class UserSignupActivity extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    if(createInventory()){
+                    if(createInventory() && createShoppingList()){
                         Toast.makeText(UserSignupActivity.this, "Login into new Account", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
@@ -71,6 +71,21 @@ public class UserSignupActivity extends AppCompatActivity {
         newInventory.put("ingredient_list", newArray);
         try {
             newInventory.save();
+            return true;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Sign Up Failed!", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    private boolean createShoppingList() {
+        ParseObject newShoppingList = ParseObject.create("ShoppingList");
+        JSONArray newArray = new JSONArray();
+        newShoppingList.put("user", user);
+        newShoppingList.put("shopping_list", newArray);
+        try {
+            newShoppingList.save();
             return true;
         } catch (ParseException e) {
             e.printStackTrace();

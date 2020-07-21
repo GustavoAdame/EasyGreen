@@ -10,6 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
+import com.example.easygreen.models.Inventory;
+import com.example.easygreen.models.ShoppingList;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -47,12 +55,27 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
             cbSelect.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
+                    deleteItemShopping(getAdapterPosition());
                     items.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     return true;
                 }
             });
         }
+    }
+
+    private void deleteItemShopping(final int position) {
+        ParseQuery<ShoppingList> query = ParseQuery.getQuery(ShoppingList.class);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<ShoppingList>() {
+            @Override
+            public void done(List<ShoppingList> objects, ParseException e) {
+                JSONArray shoppingList = objects.get(0).getShoppingList();
+                shoppingList.remove(position);
+                objects.get(0).setShoppingList(shoppingList);
+                objects.get(0).saveInBackground();
+            }
+        });
     }
 
 }

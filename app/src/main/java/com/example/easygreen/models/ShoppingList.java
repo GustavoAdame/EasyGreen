@@ -2,20 +2,21 @@ package com.example.easygreen.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
-@ParseClassName("Shopping_List")
-public class Shopping_List extends ParseObject {
-    public static final String KEY_objectId = "objectId";
+@ParseClassName("ShoppingList")
+public class ShoppingList extends ParseObject {
+    public static final String KEY_user = "user";
     public static final String KEY_shopping_list = "shopping_list";
 
-    public String getId(){
-        return getString(KEY_objectId);
+    public ParseUser getUser(){
+        return ParseUser.getCurrentUser();
     }
 
-    public void setId(String id){
-        put(KEY_objectId, id);
+    public void setUser(ParseUser user){
+        put(KEY_user, user);
     }
 
     public JSONArray getShoppingList(){
