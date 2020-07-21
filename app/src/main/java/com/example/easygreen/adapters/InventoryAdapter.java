@@ -22,16 +22,18 @@ import org.json.JSONArray;
 import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>{
-    private List<String> ingredients;
+    /*** Local Variables **********************/
     private Context context;
-
     private TextView tvIngredientName;
     private TextView btnIngredientDelete;
+    private List<String> ingredients;
 
+    /*** Constructor takes in a String List that represent list of ingredients ***************/
     public InventoryAdapter(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
+    /*** Inflate ViewHolder **********************/
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,22 +42,26 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         return new ViewHolder(view);
     }
 
+    /*** Add the following data into ViewHolder **********************/
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         tvIngredientName.setText(ingredients.get(position));
     }
 
+    /*** Part of the Adapter Interface but not in use **********************/
     @Override
     public int getItemCount() {
         return ingredients.size();
     }
 
+    /*** Inflate ViewHolder's view elements **********************/
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientName);
             btnIngredientDelete = itemView.findViewById(R.id.btnIngredientDelete);
 
+            /****** User clicks on [Delete] *******/
             btnIngredientDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -68,6 +74,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
+    /*** Delete the Inventory item from server based on item's position *****************/
     private void deleteItemInventory(final int position) {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
         inventory.whereEqualTo("user", ParseUser.getCurrentUser());

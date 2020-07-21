@@ -22,14 +22,17 @@ import org.json.JSONArray;
 import java.util.List;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHolder> {
-    public List<String> items;
+    /*** Local Variables **********************/
     private Context context;
     public CheckBox cbSelect;
+    public List<String> checklist;
 
-    public ShoppingAdapter(List<String> items) {
-        this.items = items;
+    /*** Constructor takes in a String List that represent a shopping list ***************/
+    public ShoppingAdapter(List<String> checklist) {
+        this.checklist = checklist;
     }
 
+    /*** Inflate ViewHolder **********************/
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,25 +41,30 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    /*** Add the following data into ViewHolder **********************/
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        cbSelect.setText(items.get(position));
+        cbSelect.setText(checklist.get(position));
     }
 
+    /*** Part of the Adapter Interface but not in use **********************/
     @Override
     public int getItemCount() {
-        return items.size();
+        return checklist.size();
     }
 
+    /*** Inflate ViewHolder's view elements **********************/
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cbSelect = itemView.findViewById(R.id.cbSelect);
+
+            /****** User holds on checkbox item for more than 1 second *******/
             cbSelect.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     deleteItemShopping(getAdapterPosition());
-                    items.remove(getAdapterPosition());
+                    checklist.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     return true;
                 }
@@ -64,6 +72,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         }
     }
 
+    /*** Delete the Shopping List item from server based on item's position **********************/
     private void deleteItemShopping(final int position) {
         ParseQuery<ShoppingList> query = ParseQuery.getQuery(ShoppingList.class);
         query.whereEqualTo("user", ParseUser.getCurrentUser());
