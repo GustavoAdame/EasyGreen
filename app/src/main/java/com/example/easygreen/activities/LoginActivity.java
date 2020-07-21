@@ -16,6 +16,7 @@ import com.facebook.LoginStatusCallback;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.ParseUser;
 
 import java.util.Arrays;
 
@@ -55,6 +56,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(Exception exception) {}
         });
+
+        if (ParseUser.getCurrentUser() != null) {
+            goMainActivity();
+        }
 
     }
 

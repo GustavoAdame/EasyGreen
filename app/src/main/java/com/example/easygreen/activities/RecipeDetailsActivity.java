@@ -47,8 +47,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     }
 
-
-
     /***************** Inflating Views *****************/
     private void displayViews() {
         ivRecipeImage = findViewById(R.id.ivRecipeImage);
@@ -116,13 +114,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 JSONArray jsonArray = json.jsonArray;
                 try {
                     JSONArray steps = jsonArray.getJSONObject(0).getJSONArray("steps");
-                    String instruction = "";
                     for(int i = 0; i < steps.length(); i++){
-                        String stepNumber = steps.getJSONObject(i).getString("number");
                         String stepInstruction = steps.getJSONObject(i).getString("step");
-                        instruction = "Step " + stepNumber + ". " + stepInstruction + "\n";
+                        tvRecipeDescription.setText(stepInstruction.replaceAll(".", System.lineSeparator()));
                     }
-                    tvRecipeDescription.setText(instruction);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
