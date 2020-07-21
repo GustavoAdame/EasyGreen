@@ -84,21 +84,23 @@ public class ShoppingListFragment extends Fragment {
     /*********** Get initial Shopping List from database ******************/
     private void getShoppingList() {
         ParseQuery<ShoppingList> query = ParseQuery.getQuery(ShoppingList.class);
-        query.whereEqualTo("user", ParseUser.getCurrentUser());
-        query.findInBackground(new FindCallback<ShoppingList>() {
-            @Override
-            public void done(List<ShoppingList> objects, ParseException e) {
-                JSONArray shoppingList = objects.get(0).getShoppingList();
-                for (int i = 0; i < shoppingList.length(); i++) {
-                    try {
-                        items.add(shoppingList.getString(i));
-                        shoppingAdapter.notifyDataSetChanged();
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
+        if(ParseUser.getCurrentUser() != null){
+            query.whereEqualTo("user", ParseUser.getCurrentUser());
+            query.findInBackground(new FindCallback<ShoppingList>() {
+                @Override
+                public void done(List<ShoppingList> objects, ParseException e) {
+                    JSONArray shoppingList = objects.get(0).getShoppingList();
+                    for (int i = 0; i < shoppingList.length(); i++) {
+                        try {
+                            items.add(shoppingList.getString(i));
+                            shoppingAdapter.notifyDataSetChanged();
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     /****** Update changes to database and application ****************************/

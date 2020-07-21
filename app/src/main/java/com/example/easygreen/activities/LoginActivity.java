@@ -2,6 +2,7 @@ package com.example.easygreen.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -16,7 +17,10 @@ import com.facebook.LoginStatusCallback;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.facebook.ParseFacebookUtils;
 
 import java.util.Arrays;
 
@@ -29,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -65,14 +70,28 @@ public class LoginActivity extends AppCompatActivity {
 
     /***** User clicks on [Continue with Facebook] ****************/
     public void openFB(View view) {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        if (isLoggedIn){
-            goMainActivity();
-        } else {
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-            goMainActivity();
-        }
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, Arrays.asList("public_profile"), new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException err) {
+                if (user == null) {
+                    Log.d("Gustavo", "Uh oh. The user cancelled the Facebook login.");
+                } else if (user.isNew()) {
+                    Log.d("Gustavo", "User signed up and logged in through Facebook!");
+                } else {
+                    Log.d("Gustavo", "User logged in through Facebook!");
+                    goMainActivity();
+                }
+            }
+        });
+
+//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+//        if (isLoggedIn){
+//            goMainActivity();
+//        } else {
+//            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+//            goMainActivity();
+//        }
     }
 
     /***** User clicks on [Login with Easy Green] ****************/

@@ -105,10 +105,11 @@ public class InventoryFragment extends Fragment {
     /*********** Get initial inventory from database ******************/
     private void getInventory() {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
-        inventory.findInBackground(new FindCallback<Inventory>() {
-            @Override
-            public void done(List<Inventory> objects, ParseException e) {
+        if(ParseUser.getCurrentUser() != null){
+            inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+            inventory.findInBackground(new FindCallback<Inventory>() {
+                @Override
+                public void done(List<Inventory> objects, ParseException e) {
                     JSONArray inventory = objects.get(0).getInventory();
                     for (int i = 0; i < inventory.length(); i++) {
                         try {
@@ -123,7 +124,8 @@ public class InventoryFragment extends Fragment {
                         }
                     }
                 }
-        });
+            });
+        }
     }
 
 

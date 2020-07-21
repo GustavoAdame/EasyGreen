@@ -6,6 +6,7 @@ import com.example.easygreen.models.Inventory;
 import com.example.easygreen.models.ShoppingList;
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.facebook.ParseFacebookUtils;
 
 public class ParseClient extends Application {
     @Override
@@ -21,5 +22,7 @@ public class ParseClient extends Application {
                 .server("https://easygreen.herokuapp.com/parse/")
                 .build()
         );
+
+        ParseFacebookUtils.initialize(this);
     }
 }

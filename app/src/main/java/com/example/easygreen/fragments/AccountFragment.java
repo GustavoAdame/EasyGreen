@@ -45,10 +45,10 @@ public class AccountFragment extends Fragment {
     private void displayViews() {
         ivProfileImage = getActivity().findViewById(R.id.ivProfileImage);
         tvProfileName = getActivity().findViewById(R.id.tvProfileName);
-        ParseUser user = ParseUser.getCurrentUser();
-        Glide.with(getActivity()).load(user.getParseFile("profileImage").getUrl()).into(ivProfileImage);
-        tvProfileName.setText(user.get("firstName") + " " + user.get("lastName"));
-
+        if(ParseUser.getCurrentUser() != null){
+            Glide.with(getActivity()).load( ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).into(ivProfileImage);
+            tvProfileName.setText( ParseUser.getCurrentUser().get("firstName") + " " +  ParseUser.getCurrentUser().get("lastName"));
+        }
     }
 
     /****** Inflate Fragment layout ************/
