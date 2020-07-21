@@ -145,7 +145,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 ## Weekly Update of Application 
 <p align="center">
-<img src="EasyGreen3.gif" height=700>
+<img src="EasyGreen3.5.gif" height=700>
 
 GIF created with [KAP](https://getkap.co/)    
 </p> 
