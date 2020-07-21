@@ -4,7 +4,7 @@ EasyGreen
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Product Spec](#Product-Spec)
-1. [Wireframes](#Wireframes)
+1. [Demo](#Demo)
 2. [Schema](#Schema)
 
 ## Overview
@@ -60,45 +60,35 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 **Required Must-have Stories**
 
-- [ ] User can login with a Facebook account 
-- [ ] User are able to select items from a list of ingridents
-- [ ] User are able to see and update a shopping list on a seperate activity 
-- [ ] User can see a list of recipes which they can select and read from given ingridents 
+- [X] User can login and sign up 
+- [X] User are able to create an inventory from a list of ingridents
+- [X] User are able to create a shopping list 
+- [X] User can see a list of recipes which they can select and read from given ingridents 
 - [ ] User can share a post on Facebook from the app
 
 **Optional Nice-to-have Stories**
 
 - [ ] Keep track of user food items expiration dates and send app notifications to alert user  
 - [ ] Have a nice graph of current inventory broken down in categories 
-- [ ] Have an activity for video content from community x 
+- [ ] Have an activity for video content from community  
 
 ### 2. Screen Archetypes
 
-*  Login Screen 
-   * Login via a Facebook Button 
-   * Sign up via a Facebook Button
-   * Skip button - User straight into app but no recipes or shopping list is stored 
-* Ingridents List Screen 
-    * User can scroll up to see list of categories via CardViews of food categories 
-        * User can open up the CardView and select food items via Chips 
-        * User click on item to add or reclick to delete 
-    * Horizontal LinearLayout above the bottom navigation for two buttons
-        * Inventory -> InventoryActivity: See current items and update or add to shopping list
-        * See Recipes -> RecipeActivity: Call an intent to RecipesActivity and passing list of inventory
+* Login Screen 
+   * Login and Sign up for a EasyGreen account 
+   
+* Inventory Screen 
+    * User can search for an ingredient, given suggestions
 
-* Recipes List Screen (not part of bottom navigation)
-    * User can scoll up to see list of recipes and when user clicks on one 
-    * RecipeDetailsActivity is launched 
-        * See prep time, serving, etc.
+* Recipes Screen
+    * User can see 20 recipes based on inventory
+    * User can click on a recipe and get more details such as instructions and prep time
 
 * Shopping List Screen 
-    * User can create a list by adding items (SimpleTodo) but with button interaction
-
+    * User can type anything and creates a list of items 
 
 * Discover Screen 
-   * User can post their meals to a specific group via FAB
-   * User can scoll up to see videos of people cooking, sharing tips to be eco-friendly, or related topics 
-   * User can comment or like video
+   * In progress
  
 
 ### 3. Navigation
@@ -109,41 +99,9 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 * Recipes
 * Shopping List
 * Discover
-  
-## Wireframes
-<p align=center>
-  <img src="https://i.imgur.com/cNdekOE.jpg" height=400>
-  
-  <img src="https://i.imgur.com/05FMoyN.jpg" height=400>
-  
-   <img src="https://i.imgur.com/wkcmZDD.jpg" height=400>
-</p>
+* Account
 
-<p align=center>
-  <img src="https://i.imgur.com/nS8tcdP.jpg" height=400>
-  
-  <img src="https://i.imgur.com/4Ejjtpw.jpg" height=400>
-  
-   <img src="https://i.imgur.com/3IwnbAr.jpg" height=400>
-</p>
-
-<p align=center>
-  <img src="https://i.imgur.com/Eav6c6b.jpg" height=400>
-  
-  <img src="https://i.imgur.com/k2G3Wcj.jpg" height=400>
-  
-   <img src="https://i.imgur.com/AkURDLX.jpg" height=400>
-</p>
-
-### SiteMap
-<img src="https://i.imgur.com/7RHbtvF.jpg" width=600 height=500>
-
-### Interactive Prototype
-[Online Mockup](https://marvelapp.com/eg24a14/screen/70858799)
-
-* Press H to restart from Login Screen
-
-## Weekly Update of Application 
+## Demo
 <p align="center">
 <img src="EasyGreen3.5.gif" height=700>
 
@@ -151,25 +109,12 @@ GIF created with [KAP](https://getkap.co/)
 </p> 
 
 ## Schema 
-
-<br> **User** *(user_id, name, email, phone_number, zip_code)*
-<br> **Opens** *(user_id, account_num)*
-<br> **Account** *(account_num, date_opened)*
-<br> **Shares** *(account_num, post_id)*
-<br> **Post** *(post_id, timestamp, media, caption)*
-<br> **Creates** *(account_num, iList_id)*
-<br> **Inventory** *(iList_id, count, [Ingredients])*
-<br> **Holds** *(account_num, rList_id)*
-<br> **Recipes** *(rList_id, count, [Recipes])*
-
-
-### Models
-<img src="https://i.imgur.com/nSZxnte.jpg">
+<br> **User** *(username, firstName, lastName, profileImage)*
+<br> **Inventory** *(ingredient_list, **User**\*)*
 
 ### Networking
 **Spoonacular API**
 <br> Base URL: https://spoonacular.com/food-api/docs#Search-Recipes-by-Ingredients
-
 
 | HTTP Verb | Endpoint | Description|
 | -------- | -------- | -------- |
