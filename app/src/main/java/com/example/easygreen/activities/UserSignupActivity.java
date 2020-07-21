@@ -18,6 +18,7 @@ import com.parse.SignUpCallback;
 import org.json.JSONArray;
 
 public class UserSignupActivity extends AppCompatActivity {
+    /***** Local Variables **********/
     private TextView etUsername, etPassword, etFirstName, etLastName;
     private Button btnUserSignUp;
     private ParseUser user;
@@ -27,6 +28,8 @@ public class UserSignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_signup);
         displayViews();
+
+        /***** User clicks on [Sign Up] ********/
         user = new ParseUser();
         btnUserSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +39,7 @@ public class UserSignupActivity extends AppCompatActivity {
         });
     }
 
+    /******* Inflate views on Screen *********/
     private void displayViews() {
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
@@ -44,6 +48,7 @@ public class UserSignupActivity extends AppCompatActivity {
         btnUserSignUp = findViewById(R.id.btnUserSignUp);
     }
 
+    /**** Create a EasyGreen account via ParseUser *****/
     public void userSignup() {
         user.setUsername(etUsername.getText().toString());
         user.setPassword(etPassword.getText().toString());
@@ -64,6 +69,7 @@ public class UserSignupActivity extends AppCompatActivity {
         });
     }
 
+    /****** Create a Inventory model for User ************/
     private boolean createInventory() {
         ParseObject newInventory = ParseObject.create("Inventory");
         JSONArray newArray = new JSONArray();
@@ -79,6 +85,7 @@ public class UserSignupActivity extends AppCompatActivity {
         return false;
     }
 
+    /****** Create a Shopping List model for User ************/
     private boolean createShoppingList() {
         ParseObject newShoppingList = ParseObject.create("ShoppingList");
         JSONArray newArray = new JSONArray();

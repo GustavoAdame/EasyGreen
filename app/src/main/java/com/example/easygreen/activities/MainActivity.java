@@ -17,14 +17,16 @@ import com.example.easygreen.fragments.ShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    public String inventory = "";
-    public String itemAdded = "";
-
+    /***** Fragment References **************/
     final Fragment inventoryFragment = new InventoryFragment();
     final Fragment recipeFragment = new RecipeFragment();
     final Fragment shoppingListFragment = new ShoppingListFragment();
     final Fragment discoverFragment = new DiscoverFragment();
     final Fragment accountFragment = new AccountFragment();
+
+    /**** Local Variables ***********/
+    public String inventory = "";
+    public String itemAdded = "";
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment active = recipeFragment;
 
@@ -35,21 +37,23 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        if(getItem()){
-            bottomNavigationView.setSelectedItemId(R.id.action_inventory);
-        } else if(passInventory()){
+        /**** If true, then change icon selected to Recipes *********************/
+        if(passInventory()){
             bottomNavigationView.setSelectedItemId(R.id.action_recipes);
         }
 
+        /********** Create a stack of fragments and hide them *******************/
         fragmentManager.beginTransaction().add(R.id.flContainer, accountFragment, "5").hide(accountFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, discoverFragment, "4").hide(discoverFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, shoppingListFragment, "3").hide(shoppingListFragment).commit();
         fragmentManager.beginTransaction().add(R.id.flContainer, inventoryFragment, "2").hide(inventoryFragment).commit();
 
+        /********** Initial fragment is shown *******************/
         bottomNavigationView.setSelectedItemId(R.id.action_recipes);
         fragmentManager.beginTransaction().add(R.id.flContainer, recipeFragment, "1").commit();
     }
 
+    /***** User clicks a icon on the Bottom Navigation, display a certain fragment **************/
     BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
          @Override
          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
          }
      };
 
-
+    /****** Get inventory and pass it to RecipeFragment ********/
     public boolean passInventory(){
         Bundle fromInventoryFragment = getIntent().getExtras();
         if(fromInventoryFragment != null){
@@ -97,19 +101,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-    public boolean getItem(){
-        Bundle fromGroupAdapter = getIntent().getExtras();
-        if(fromGroupAdapter != null){
-            itemAdded = fromGroupAdapter.getString("newItem");
-            if (itemAdded != null) {
-                Bundle toInventoryFragment = new Bundle();
-                toInventoryFragment.putString("newItem", itemAdded);
-                inventoryFragment.setArguments(toInventoryFragment);
-                return true;
-            }
-        }
-        return false;
-    }
-
 }

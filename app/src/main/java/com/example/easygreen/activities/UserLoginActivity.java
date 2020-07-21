@@ -15,6 +15,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class UserLoginActivity extends AppCompatActivity {
+    /***** Local Variables **********/
     private TextView etUsername, etPassword;
     private Button btnLogin;
     private ParseUser user;
@@ -24,6 +25,8 @@ public class UserLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
         displayViews();
+
+        /*** User clicks on [Log In] ******/
         user = new ParseUser();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,12 +36,14 @@ public class UserLoginActivity extends AppCompatActivity {
         });
     }
 
+    /***** Inflate views on screen *********/
     private void displayViews() {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
     }
 
+    /***** EasyGreen Login Verification *********/
     public void userLogin() {
         ParseUser.logInInBackground(etUsername.getText().toString(), etPassword.getText().toString(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
@@ -51,6 +56,4 @@ public class UserLoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

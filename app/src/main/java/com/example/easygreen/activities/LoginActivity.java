@@ -20,10 +20,16 @@ import com.facebook.login.widget.LoginButton;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-
+    /***** Local Variables **********/
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     private static final String EMAIL = "email";
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btnFBLogin);
 
-        /* Handle login responses */
+        /**** Handle Facebook login responses *********/
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {}
-
                     @Override
                     public void onCancel() {}
-
                     @Override
                     public void onError(FacebookException exception) {}
                 });
-
         LoginManager.getInstance().retrieveLoginStatus(this, new LoginStatusCallback() {
             @Override
             public void onCompleted(AccessToken accessToken) {}
@@ -55,12 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
+    /***** User clicks on [Continue with Facebook] ****************/
     public void openFB(View view) {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
@@ -74,11 +72,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /***** User clicks on [Login with Easy Green] ****************/
     public void loginPage(View view) {
         Intent i = new Intent(this, UserLoginActivity.class);
         startActivity(i);
     }
 
+    /***** User clicks on [Sign up] ****************/
     public void signUp(View view) {
         Intent i = new Intent(this, UserSignupActivity.class);
         startActivity(i);

@@ -53,8 +53,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         tvCalorieServing = findViewById(R.id.tvCalorieServing);
     }
 
-
-
     /***************** Get more details for a recipe *****************/
     public void getRecipeDetails(String recipeId) {
         HttpUrl url = new HttpUrl.Builder()
