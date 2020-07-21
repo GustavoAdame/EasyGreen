@@ -18,6 +18,7 @@ import com.example.easygreen.activities.LoginActivity;
 import com.parse.ParseUser;
 
 public class AccountFragment extends Fragment {
+    /****** Local Variables ************/
     private Button btnLogout;
     private ImageView ivProfileImage;
     private TextView tvProfileName;
@@ -26,6 +27,8 @@ public class AccountFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         displayViews();
+
+        /***** User clicks on [Log Out] ***********/
         btnLogout = getActivity().findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +41,7 @@ public class AccountFragment extends Fragment {
         });
     }
 
+    /****** Inflate Fragment view elements *******/
     private void displayViews() {
         ivProfileImage = getActivity().findViewById(R.id.ivProfileImage);
         tvProfileName = getActivity().findViewById(R.id.tvProfileName);
@@ -47,6 +51,7 @@ public class AccountFragment extends Fragment {
 
     }
 
+    /****** Inflate Fragment layout ************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_profile, container, false);

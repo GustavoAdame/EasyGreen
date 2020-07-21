@@ -49,6 +49,7 @@ public class InventoryFragment extends Fragment {
         getInventory();
         searchIngredients();
 
+        /******* User clicks [Get Recipes] *********/
         Button btnGetRecipes = getActivity().findViewById(R.id.btnGetRecipes);
         btnGetRecipes.setOnClickListener(new View.OnClickListener() {
             @Override

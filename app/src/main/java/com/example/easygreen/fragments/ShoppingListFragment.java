@@ -31,12 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingListFragment extends Fragment {
+    /******* Local Variables *************/
     private RecyclerView rvShoppingList;
     private ShoppingAdapter shoppingAdapter;
-    private List<String> items = new ArrayList<>();
     private EditText addItem;
     private Button btnAdd;
+    private List<String> items = new ArrayList<>();
 
+    /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -44,6 +46,8 @@ public class ShoppingListFragment extends Fragment {
         displayViews(getActivity());
         getShoppingList();
         displayRecyclerView(getActivity());
+
+        /******** User clicks on [Add] *************/
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,11 +58,7 @@ public class ShoppingListFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    /***************** Inflating Fragment Layout, Views, RecyclerView *****************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_shopping_list, container, false);
@@ -100,7 +100,8 @@ public class ShoppingListFragment extends Fragment {
             }
         });
     }
-
+    
+    /****** Update changes to database and application ****************************/
     private void updateShoppingList(String item) {
         addShoppingList(item);
         items.add(item);

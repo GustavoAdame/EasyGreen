@@ -25,18 +25,21 @@ import java.io.File;
 import static android.app.Activity.RESULT_OK;
 
 public class DiscoverFragment extends Fragment {
+    /***** Local Variables *************/
     private int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
-    public final String APP_TAG = "EasyGreen";
+    private final String APP_TAG = "EasyGreen";
     private File photoFile;
-    public String photoFileName = "photo.jpg";
-    ImageView  image;
+    private String photoFileName = "photo.jpg";
+    private ImageView  image;
 
+    /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FloatingActionButton button = getActivity().findViewById(R.id.btnTakeMedia);
         image = getActivity().findViewById(R.id.ivMedia);
 
+        /*** User clicks on Floating Action Button ************/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,18 +48,13 @@ public class DiscoverFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
+    /****** Inflate Fragment layout ************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_discover, container, false);
     }
 
-
-
+    /***** Open Phone Camera *******/
     private void launchCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
@@ -69,6 +67,7 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
+    /***** Get Picture Path File *******/
     public File getPhotoFileUri(String fileName) {
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
@@ -77,6 +76,7 @@ public class DiscoverFragment extends Fragment {
         return file;
     }
 
+    /******* Pass Picture back to Fragment **********/
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
