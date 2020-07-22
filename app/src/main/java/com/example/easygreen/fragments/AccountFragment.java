@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.easygreen.R;
 import com.example.easygreen.activities.LoginActivity;
 import com.facebook.AccessToken;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.parse.ParseUser;
 
@@ -58,8 +59,13 @@ public class AccountFragment extends Fragment {
     private void displayViews() {
         ivProfileImage = getActivity().findViewById(R.id.ivProfileImage);
         tvProfileName = getActivity().findViewById(R.id.tvProfileName);
-        if(ParseUser.getCurrentUser() != null){
+        if(ParseUser.getCurrentUser() != null && Profile.getCurrentProfile() == null){
             Glide.with(getActivity()).load( ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).into(ivProfileImage);
+            tvProfileName.setText( ParseUser.getCurrentUser().get("firstName") + " " +  ParseUser.getCurrentUser().get("lastName"));
+        }
+
+        if(Profile.getCurrentProfile() != null){
+            Glide.with(getActivity()).load(Profile.getCurrentProfile().getProfilePictureUri(500, 600).toString()).into(ivProfileImage);
             tvProfileName.setText( ParseUser.getCurrentUser().get("firstName") + " " +  ParseUser.getCurrentUser().get("lastName"));
         }
     }

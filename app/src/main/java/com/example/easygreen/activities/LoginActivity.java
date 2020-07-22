@@ -18,11 +18,13 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.LoginStatusCallback;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.facebook.ParseFacebookUtils;
@@ -37,7 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     /***** Local Variables **********/
     private LoginButton loginButton;
 
-    // FIXME: 7/21/20 Weird bug when Facebook login opens - it calls twice
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
@@ -50,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btnFBLogin);
 
+        disconnectFromFacebook();
         if (ParseUser.getCurrentUser() != null || AccessToken.getCurrentAccessToken() != null) {
             goMainActivity();
         }
@@ -61,15 +63,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if(err != null){
-                    Log.d("Gustavo", "Uh oh. Error occurred " + err.toString());
+                    Toast.makeText(LoginActivity.this, "Uh oh. Error occurred " + err.toString(), Toast.LENGTH_SHORT).show();
                 }
-
                 if (user == null) {
-                    Log.d("Gustavo", "Uh oh. The user cancelled the Facebook login.");
-                } else if (user.isNew() && createInventory(user) && createShoppingList(user)) {
+                } else if (user.isNew()) {
                     //User signed up and logged in through Facebook
                     storeFacebookData(user);
-                    goMainActivity();
+                    if(createInventory(user) && createShoppingList(user)){
+                        goMainActivity();
+                    }
                 } else {
                     //User logged in through Facebook
                     goMainActivity();
@@ -78,25 +80,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // FIXME: 7/21/20 This doesn't do anything - Goal store user full name into Parse
     private void storeFacebookData(final ParseUser user) {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        GraphRequest request = GraphRequest.newMeRequest(
-                accessToken,
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        try {
-                            String firstName = object.getString("first_name");
-                            String lastName = object.getString("last_name");
-                            user.put("firstName", firstName);
-                            user.put("lastName", lastName);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+        Profile currentProfile = Profile.getCurrentProfile();
+        user.put("firstName", currentProfile.getFirstName());
+        user.put("lastName", currentProfile.getLastName());
     }
 
     public void disconnectFromFacebook() {
