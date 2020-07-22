@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.easygreen.R;
 import com.example.easygreen.activities.LoginActivity;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.parse.ParseUser;
 
 public class AccountFragment extends Fragment {
@@ -33,12 +35,23 @@ public class AccountFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseUser.logOut();
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                Intent i = new Intent(getContext(), LoginActivity.class);
-                startActivity(i);
+                if(ParseUser.getCurrentUser() != null){
+                    ParseUser.logOut();
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    goLoginActivity();
+                }
+                if(AccessToken.getCurrentAccessToken() != null){
+                    LoginManager.getInstance().logOut();
+                    AccessToken.setCurrentAccessToken(null);
+                    goLoginActivity();
+                }
             }
         });
+    }
+
+    private void goLoginActivity() {
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+        getActivity().finish();
     }
 
     /****** Inflate Fragment view elements *******/
