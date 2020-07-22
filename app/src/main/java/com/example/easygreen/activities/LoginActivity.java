@@ -36,8 +36,8 @@ import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
     /***** Local Variables **********/
     private LoginButton loginButton;
-    private static final String EMAIL = "email";
 
+    // FIXME: 7/21/20 Weird bug when Facebook login opens - it calls twice
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btnFBLogin);
 
-        disconnectFromFacebook();
         if (ParseUser.getCurrentUser() != null || AccessToken.getCurrentAccessToken() != null) {
             goMainActivity();
         }
