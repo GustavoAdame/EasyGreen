@@ -10,33 +10,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivProfileImage"
-            android:layout_marginTop="16dp"
+        <RelativeLayout
+            android:id="@+id/rlContainer"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="fitCenter"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="fitCenter"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait"/>
+
+            <ImageView
+                android:id="@+id/ivFacebookTag"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@+id/ivProfileImage"
+                android:layout_alignRight="@+id/ivProfileImage"
+                android:layout_marginRight="85dp"
+                android:src="@drawable/ic_facebook" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tvProfileName"
             android:text="John Doe"
             android:textSize="24dp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ivProfileImage"
+            android:layout_below="@+id/rlContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 
         <Button
+            android:id="@+id/btnTakePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProfileName"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="92dp"
+            android:text="Change Profile Image" />
+
+        <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="158dp"
-            android:layout_marginBottom="183dp"
+            android:layout_below="@+id/btnTakePicture"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
             android:backgroundTint="@android:color/holo_red_dark"
             android:text="Logout"
             android:textColor="@android:color/white" />

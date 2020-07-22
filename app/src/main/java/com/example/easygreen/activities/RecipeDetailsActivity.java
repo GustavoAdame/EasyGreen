@@ -116,7 +116,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     JSONArray steps = jsonArray.getJSONObject(0).getJSONArray("steps");
                     for(int i = 0; i < steps.length(); i++){
                         String stepInstruction = steps.getJSONObject(i).getString("step");
-                        tvRecipeDescription.setText(stepInstruction.replaceAll(".", System.lineSeparator()));
+                        tvRecipeDescription.setText(stepInstruction);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

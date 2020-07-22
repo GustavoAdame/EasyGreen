@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btnFBLogin);
 
-        disconnectFromFacebook();
         if (ParseUser.getCurrentUser() != null || AccessToken.getCurrentAccessToken() != null) {
             goMainActivity();
         }
@@ -84,18 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         Profile currentProfile = Profile.getCurrentProfile();
         user.put("firstName", currentProfile.getFirstName());
         user.put("lastName", currentProfile.getLastName());
-    }
-
-    public void disconnectFromFacebook() {
-        if (AccessToken.getCurrentAccessToken() == null) {
-            return;
-        }
-        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null,
-                HttpMethod.DELETE, new GraphRequest.Callback() {
-            @Override
-            public void onCompleted(GraphResponse graphResponse) {
-                LoginManager.getInstance().logOut();
-            }}).executeAsync();
     }
 
     /***** User clicks on [Login with Easy Green] ****************/
