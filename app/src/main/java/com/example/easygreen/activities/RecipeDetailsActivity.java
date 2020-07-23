@@ -113,11 +113,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONArray jsonArray = json.jsonArray;
                 try {
+                    String a = "";
+                    //String array of steps
                     JSONArray steps = jsonArray.getJSONObject(0).getJSONArray("steps");
                     for(int i = 0; i < steps.length(); i++){
+                        String stepNumber  = steps.getJSONObject(i).getString("number");
                         String stepInstruction = steps.getJSONObject(i).getString("step");
-                        tvRecipeDescription.setText(stepInstruction);
+                       a += ("Step " + stepNumber + ": " + stepInstruction);
+                       a += "\n\n";
                     }
+                    tvRecipeDescription.setText(a);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
