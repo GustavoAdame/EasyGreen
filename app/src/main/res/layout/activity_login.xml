@@ -15,8 +15,7 @@
         android:layout_height="46dp"
         android:layout_alignLeft="@+id/tvAppName"
         android:layout_marginLeft="-50dp"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/noun_leaf_3435075" />
+        android:layout_marginTop="100dp"/>
 
     <TextView
         android:id="@+id/tvAppName"

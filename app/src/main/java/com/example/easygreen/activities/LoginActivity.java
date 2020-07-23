@@ -1,9 +1,11 @@
 package com.example.easygreen.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -38,6 +40,8 @@ import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity {
     /***** Local Variables **********/
     private LoginButton loginButton;
+    private ImageView ivLogo;
+    AnimationDrawable iconAnimate;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -50,10 +54,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btnFBLogin);
+        ivLogo = findViewById(R.id.ivLogo);
+        ivLogo.setBackgroundResource(R.drawable.animation);
+        iconAnimate = (AnimationDrawable) ivLogo.getBackground();
 
         if (ParseUser.getCurrentUser() != null || AccessToken.getCurrentAccessToken() != null) {
             goMainActivity();
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        iconAnimate.start();
     }
 
     /***** User clicks on [Continue with Facebook] ****************/
