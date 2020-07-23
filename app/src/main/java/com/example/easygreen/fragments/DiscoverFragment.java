@@ -24,8 +24,19 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
 import com.example.easygreen.models.Recipe;
 import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.share.ShareApi;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.MessageDialog;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +55,8 @@ public class DiscoverFragment extends Fragment {
     private final String APP_TAG = "EasyGreen";
     private File photoFile;
     private String photoFileName = "photo.jpg";
+    private ShareDialog shareDialog;
+    private CallbackManager callbackManager;
 
     /************* Initial State of Fragment ********************/
     @Override
@@ -51,16 +64,41 @@ public class DiscoverFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         FloatingActionButton button = getActivity().findViewById(R.id.btnTakeMedia);
         tvPostText = getActivity().findViewById(R.id.tvPostText);
-        getEasyGreenFeed();
+        //getEasyGreenFeed();
 
         /*** User clicks on Floating Action Button ************/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
+                // FIXME: 7/23/20 Work on callback (1. where to do it and the proper sequence of events
+                Snackbar.make(getView(), "Shared on Facebook!", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(getActivity());
+    }
+
+    private void publishImage(Bitmap takenImage){
+        FacebookSdk.sdkInitialize(getActivity());
+        final SharePhoto photo = new SharePhoto.Builder()
+                .setBitmap(takenImage)
+                .setCaption("Photo taken from EasyGreen")
+                .build();
+
+        if(ShareDialog.canShow(SharePhotoContent.class)){
+            SharePhotoContent content = new SharePhotoContent.Builder()
+                    .addPhoto(photo)
+                    .build();
+            shareDialog.show(content);
+        }
+    }
+
 
     private void getEasyGreenFeed() {
         HttpUrl url = new HttpUrl.Builder()
@@ -120,7 +158,8 @@ public class DiscoverFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                Bitmap image = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                publishImage(image);
             } else {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
