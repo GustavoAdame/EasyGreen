@@ -1,6 +1,7 @@
 package com.example.easygreen.fragments;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +25,8 @@ import com.example.easygreen.R;
 import com.example.easygreen.activities.MainActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.models.Inventory;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -32,6 +37,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class InventoryFragment extends Fragment {
     /******** Local Variable ************************/
@@ -57,6 +64,38 @@ public class InventoryFragment extends Fragment {
                 sendDatatoAPI();
             }
         });
+
+        /******* User swipe left to delete item *********/
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) { return false; }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                if(direction == ItemTouchHelper.LEFT){
+                    final int position = viewHolder.getAdapterPosition();
+
+                    final String prevItem = ingredients.get(position);
+                    deleteItemInventory(position);
+                    Snackbar.make(rvInventory, prevItem + " Deleted!", Snackbar.LENGTH_SHORT).show();
+                    ingredients.remove(position);
+                    inventoryAdapter.notifyItemRemoved(position);
+                }
+            }
+
+            @Override
+            public void onChildDraw (Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red))
+                        .addActionIcon(R.drawable.ic_baseline_delete_24)
+                        .create()
+                        .decorate();
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(rvInventory);
     }
 
     /***************** Inflating Views and RecyclerView *****************/
@@ -77,7 +116,6 @@ public class InventoryFragment extends Fragment {
         rvInventory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-
     /********** Send current list to Recipes fragment ********************/
     private void sendDatatoAPI() {
         Bundle toMainActivity = new Bundle();
@@ -85,6 +123,21 @@ public class InventoryFragment extends Fragment {
         Intent i = new Intent(getContext(), MainActivity.class);
         i.putExtras(toMainActivity);
         startActivity(i);
+    }
+
+    /*** Delete the Inventory item from server based on item's position *****************/
+    private void deleteItemInventory(final int position) {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
+            @Override
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray inventory = objects.get(0).getInventory();
+                inventory.remove(position);
+                objects.get(0).setInventory(inventory);
+                objects.get(0).saveInBackground();
+            }
+        });
     }
 
     /****** Autocomplete search for ingredients ****************************/
@@ -128,13 +181,12 @@ public class InventoryFragment extends Fragment {
         }
     }
 
-
     /****** Update changes to database and application ****************************/
     private void updateInventory(String item) {
         addInventory(item);
         ingredients.add(item);
         inventoryAdapter.notifyDataSetChanged();
-        Toast.makeText(getActivity(), item + " Added!", Toast.LENGTH_SHORT).show();
+        Snackbar.make(rvInventory, item + " Added!", Snackbar.LENGTH_SHORT).show();
         inventory_list += ", " + item;
     }
 

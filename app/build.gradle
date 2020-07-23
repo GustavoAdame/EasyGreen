@@ -42,4 +42,5 @@ dependencies {
     annotationProcessor 'org.parceler:parceler:1.1.12'
     implementation 'com.codepath.libraries:asynchttpclient:0.0.9'
     implementation "com.github.parse-community.Parse-SDK-Android:facebook:1.24.2"
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 }

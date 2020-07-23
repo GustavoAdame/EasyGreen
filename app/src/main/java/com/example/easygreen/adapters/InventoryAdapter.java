@@ -25,7 +25,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     /*** Local Variables **********************/
     private Context context;
     private TextView tvIngredientName;
-    private TextView btnIngredientDelete;
     private List<String> ingredients;
 
     /*** Constructor takes in a String List that represent list of ingredients ***************/
@@ -59,34 +58,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientName);
-            btnIngredientDelete = itemView.findViewById(R.id.btnIngredientDelete);
-
-            /****** User clicks on [Delete] *******/
-            btnIngredientDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    deleteItemInventory(getAdapterPosition());
-                    Toast.makeText(context, ingredients.get(getAdapterPosition()) + " Deleted!", Toast.LENGTH_SHORT).show();
-                    ingredients.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                }
-            });
         }
-    }
-
-    /*** Delete the Inventory item from server based on item's position *****************/
-    private void deleteItemInventory(final int position) {
-        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
-        inventory.findInBackground(new FindCallback<Inventory>() {
-            @Override
-            public void done(List<Inventory> objects, ParseException e) {
-                JSONArray inventory = objects.get(0).getInventory();
-                inventory.remove(position);
-                objects.get(0).setInventory(inventory);
-                objects.get(0).saveInBackground();
-            }
-        });
     }
 }
 

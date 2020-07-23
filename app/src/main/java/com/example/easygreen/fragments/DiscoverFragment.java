@@ -7,43 +7,81 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
+import com.example.easygreen.models.Recipe;
+import com.facebook.AccessToken;
+import com.facebook.Profile;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
 
 import static android.app.Activity.RESULT_OK;
 
 public class DiscoverFragment extends Fragment {
     /***** Local Variables *************/
+    private TextView tvPostText;
     private int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private final String APP_TAG = "EasyGreen";
     private File photoFile;
     private String photoFileName = "photo.jpg";
-    private ImageView  image;
 
     /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FloatingActionButton button = getActivity().findViewById(R.id.btnTakeMedia);
-        image = getActivity().findViewById(R.id.ivMedia);
+        tvPostText = getActivity().findViewById(R.id.tvPostText);
+        getEasyGreenFeed();
 
         /*** User clicks on Floating Action Button ************/
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
+            }
+        });
+    }
+
+    private void getEasyGreenFeed() {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("https")
+                .host("graph.facebook.com")
+                .addPathSegment("EasyGreenFBU")
+                .addPathSegment("feed")
+                .build();
+
+        final String request = url+"?access_token=" + AccessToken.getCurrentAccessToken();
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(request, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d("getEasyGreenFeed()", "OnSuccess");
+                JSONObject a = json.jsonObject;
+                int b = statusCode;
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d("getEasyGreenFeed()", response);
             }
         });
     }
@@ -83,7 +121,6 @@ public class DiscoverFragment extends Fragment {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                image.setImageBitmap(takenImage);
             } else {
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }

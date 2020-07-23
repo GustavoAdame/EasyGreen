@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /***** User clicks on [Continue with Facebook] ****************/
     public void openFB(View view) {
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, Arrays.asList("public_profile"), new LogInCallback() {
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, Arrays.asList("public_profile", "pages_manage_posts", "pages_read_user_content"), new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if(err != null){
