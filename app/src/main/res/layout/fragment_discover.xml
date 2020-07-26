@@ -15,16 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnTakeMedia"
+    <Button
+        android:id="@+id/btnShareFacebook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="100dp"
-        android:src="@drawable/ic_twotone_add_circle_outline_24" />
+        android:backgroundTint="@color/com_facebook_button_background_color"
+        android:drawableLeft="@drawable/com_facebook_button_icon"
+        android:text="Share"
+        android:clickable="true" />
 
 </RelativeLayout>
 

@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,23 +22,16 @@ import androidx.fragment.app.Fragment;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
-import com.example.easygreen.models.Recipe;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
-import com.facebook.share.ShareApi;
-import com.facebook.share.Sharer;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.MessageDialog;
+import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -50,29 +43,28 @@ import static android.app.Activity.RESULT_OK;
 
 public class DiscoverFragment extends Fragment {
     /***** Local Variables *************/
-    private TextView tvPostText;
     private int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1;
     private final String APP_TAG = "EasyGreen";
     private File photoFile;
     private String photoFileName = "photo.jpg";
     private ShareDialog shareDialog;
-    private CallbackManager callbackManager;
+    private Button shareButton;
+
+    /****** Inflate Fragment layout ************/
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_discover, container, false);
+    }
 
     /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        FloatingActionButton button = getActivity().findViewById(R.id.btnTakeMedia);
-        tvPostText = getActivity().findViewById(R.id.tvPostText);
-        //getEasyGreenFeed();
-
-        /*** User clicks on Floating Action Button ************/
-        button.setOnClickListener(new View.OnClickListener() {
+        shareButton = getActivity().findViewById(R.id.btnShareFacebook);
+        shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
-                // FIXME: 7/23/20 Work on callback (1. where to do it and the proper sequence of events
-                Snackbar.make(getView(), "Shared on Facebook!", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -80,7 +72,6 @@ public class DiscoverFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(getActivity());
     }
 
@@ -90,6 +81,16 @@ public class DiscoverFragment extends Fragment {
                 .setBitmap(takenImage)
                 .setCaption("Photo taken from EasyGreen")
                 .build();
+
+        final Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                "Sharing on Facebook....", Snackbar.LENGTH_INDEFINITE);
+        snackBar.setAction("Dismiss", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackBar.dismiss();
+            }
+        });
+        snackBar.show();
 
         if(ShareDialog.canShow(SharePhotoContent.class)){
             SharePhotoContent content = new SharePhotoContent.Builder()
@@ -124,11 +125,6 @@ public class DiscoverFragment extends Fragment {
         });
     }
 
-    /****** Inflate Fragment layout ************/
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discover, container, false);
-    }
 
     /***** Open Phone Camera *******/
     private void launchCamera() {
