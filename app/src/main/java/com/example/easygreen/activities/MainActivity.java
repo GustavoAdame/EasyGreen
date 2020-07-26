@@ -1,10 +1,14 @@
 package com.example.easygreen.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -14,6 +18,7 @@ import com.example.easygreen.fragments.DiscoverFragment;
 import com.example.easygreen.fragments.InventoryFragment;
 import com.example.easygreen.fragments.RecipeFragment;
 import com.example.easygreen.fragments.ShoppingListFragment;
+import com.example.easygreen.services.NotificationService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

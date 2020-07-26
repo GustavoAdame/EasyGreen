@@ -1,6 +1,8 @@
 package com.example.easygreen.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
 import com.example.easygreen.fragments.helpers.DatePickerFragment;
 import com.example.easygreen.models.Inventory;
+import com.example.easygreen.services.NotificationService;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -65,6 +69,11 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     @Override
                     public void onClick(View view) {
                         Snackbar.make(view, "Expiration: " + DatePickerFragment.currentDateString, Snackbar.LENGTH_SHORT).show();
+
+                        Intent serviceIntent = new Intent(getContext, NotificationService.class);
+                        serviceIntent.putExtra("inputExtra", DatePickerFragment.currentDateString);
+                        ContextCompat.startForegroundService(getContext, serviceIntent);
+
                         setExpiration(position, DatePickerFragment.currentDateString);
                         btnSetExpiration.setVisibility(View.INVISIBLE);
                     }
