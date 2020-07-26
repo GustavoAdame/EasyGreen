@@ -109,7 +109,7 @@ public class InventoryFragment extends Fragment {
 
     private void displayRecyclerView(FragmentActivity view) {
         rvInventory = view.findViewById(R.id.rvInventory);
-        inventoryAdapter = new InventoryAdapter(ingredients);
+        inventoryAdapter = new InventoryAdapter(ingredients, getContext());
         rvInventory.setAdapter(inventoryAdapter);
         rvInventory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
