@@ -81,7 +81,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         });
     }
 
-
     /*** Part of the Adapter Interface but not in use **********************/
     @Override
     public int getItemCount() {
@@ -127,7 +126,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray expirations = objects.get(0).getExpirations();
                 try {
-                    Snackbar.make(view, expirations.getString(adapterPosition), BaseTransientBottomBar.LENGTH_SHORT).show();
+                    Snackbar.make(view, expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
