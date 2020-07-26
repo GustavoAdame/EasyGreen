@@ -22,11 +22,11 @@ public class Inventory  extends ParseObject {
     }
 
     public JSONArray getInventory(){
-        return getJSONArray(KEY_ingredient_list);
+        return getJSONArray(KEY_inventory);
     }
 
     public void setInventory(JSONArray ingredients){
-        put(KEY_ingredient_list, ingredients);
+        put(KEY_inventory, ingredients);
     }
 
 }
