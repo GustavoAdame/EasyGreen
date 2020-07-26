@@ -70,7 +70,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void getProfileInfo() {
-        if(ParseUser.getCurrentUser() != null && Profile.getCurrentProfile() == null){
+        if(ParseUser.getCurrentUser() != null && Profile.getCurrentProfile() == null && ParseUser.getCurrentUser().getParseFile("profileImage").getUrl() != null){
             ivFacebookTag.setVisibility(View.GONE);
             Glide.with(getActivity()).load( ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).into(ivProfileImage);
             tvProfileName.setText( ParseUser.getCurrentUser().get("firstName") + " " +  ParseUser.getCurrentUser().get("lastName"));

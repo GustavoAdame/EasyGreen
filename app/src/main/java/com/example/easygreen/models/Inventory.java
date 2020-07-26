@@ -10,7 +10,6 @@ import org.json.JSONArray;
 @ParseClassName("Inventory")
 public class Inventory  extends ParseObject {
     public static final String KEY_user = "user";
-    public static final String KEY_ingredient_list = "ingredient_list";
     public static final String KEY_inventory = "inventory";
     public static final String KEY_expiration = "expiration";
 

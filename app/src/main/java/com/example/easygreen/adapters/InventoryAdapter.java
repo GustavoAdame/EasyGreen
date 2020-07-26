@@ -126,7 +126,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray expirations = objects.get(0).getExpirations();
                 try {
-                    Snackbar.make(view, expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Expires on: " + expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }

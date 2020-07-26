@@ -92,7 +92,8 @@ public class UserSignupActivity extends AppCompatActivity {
         ParseObject newInventory = ParseObject.create("Inventory");
         JSONArray newArray = new JSONArray();
         newInventory.put("user", user);
-        newInventory.put("ingredient_list", newArray);
+        newInventory.put("inventory", newArray);
+        newInventory.put("expiration", newArray);
         try {
             newInventory.save();
             return true;
