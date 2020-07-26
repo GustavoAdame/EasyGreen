@@ -20,6 +20,7 @@ import com.example.easygreen.R;
 import com.example.easygreen.fragments.helpers.DatePickerFragment;
 import com.example.easygreen.models.Inventory;
 import com.example.easygreen.services.NotificationService;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -98,7 +99,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     DialogFragment datePicker = new DatePickerFragment();
                     datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
 
-                    Snackbar.make(view, "Setting Expiration...", Snackbar.LENGTH_INDEFINITE)
+                    Snackbar.make(view, "Setting Expiration...", Snackbar.LENGTH_LONG)
                             .setAction("Confirm", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -107,7 +108,31 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                             }).show();
                 }
             });
+
+            tvIngredientName.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    getExpirationDate(view, getAdapterPosition());
+                    return true;
+                }
+            });
         }
+    }
+
+    private void getExpirationDate(final View view, final int adapterPosition) {
+        ParseQuery<Inventory> query = ParseQuery.getQuery(Inventory.class);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.findInBackground(new FindCallback<Inventory>() {
+            @Override
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray expirations = objects.get(0).getExpirations();
+                try {
+                    Snackbar.make(view, expirations.getString(adapterPosition), BaseTransientBottomBar.LENGTH_SHORT).show();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private void getOldestExpiration() {
