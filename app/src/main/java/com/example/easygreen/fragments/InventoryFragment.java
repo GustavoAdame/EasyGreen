@@ -1,29 +1,19 @@
 package com.example.easygreen.fragments;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.icu.text.DateFormat;
-import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -33,9 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easygreen.R;
 import com.example.easygreen.activities.MainActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
-import com.example.easygreen.models.DatePickerFragment;
 import com.example.easygreen.models.Inventory;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -44,7 +32,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +109,7 @@ public class InventoryFragment extends Fragment {
 
     private void displayRecyclerView(FragmentActivity view) {
         rvInventory = view.findViewById(R.id.rvInventory);
-        inventoryAdapter = new InventoryAdapter(ingredients, getContext());
+        inventoryAdapter = new InventoryAdapter(ingredients);
         rvInventory.setAdapter(inventoryAdapter);
         rvInventory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -177,7 +164,7 @@ public class InventoryFragment extends Fragment {
                     JSONArray inventory = objects.get(0).getInventory();
                     for (int i = 0; i < inventory.length(); i++) {
                         try {
-                            String item = inventory.getJSONObject(i).getString("item");
+                            String item = inventory.getString(i);
                             ingredients.add(item);
                             inventory_list += item;
                             if (i != inventory.length() - 1) {
@@ -209,15 +196,9 @@ public class InventoryFragment extends Fragment {
             @Override
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray inventory = objects.get(0).getInventory();
-                try {
-                    JSONObject newItem = new JSONObject();
-                    newItem.put("item", name);
-                    inventory.put(newItem);
-                    objects.get(0).setInventory(inventory);
-                    objects.get(0).saveInBackground();
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                }
+                inventory.put(name);
+                objects.get(0).setInventory(inventory);
+                objects.get(0).saveInBackground();
             }
         });
     }
