@@ -25,6 +25,8 @@ import com.example.easygreen.R;
 import com.example.easygreen.fragments.InventoryFragment;
 import com.example.easygreen.models.DatePickerFragment;
 import com.example.easygreen.models.Inventory;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -73,6 +75,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     btnSetExpiration.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            Snackbar.make(view, "Expiration: " + DatePickerFragment.currentDateString, Snackbar.LENGTH_SHORT).show();
                             setExpiration(position, DatePickerFragment.currentDateString);
                             btnSetExpiration.setVisibility(View.INVISIBLE);
                         }
