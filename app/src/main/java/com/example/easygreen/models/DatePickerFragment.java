@@ -8,11 +8,14 @@ import android.widget.DatePicker;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.fragments.InventoryFragment;
 
 import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    public static String currentDateString;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,7 +32,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        InventoryFragment fragment = new InventoryFragment(currentDateString);
+        if(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()) != null){
+            currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.util.Calendar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -58,14 +61,46 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     /*** Add the following data into ViewHolder **********************/
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         tvIngredientName.setText(ingredients.get(position));
 
         btnSetExpiration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
+                    DialogFragment datePicker = new DatePickerFragment();
+                    datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
+                    btnSetExpiration.setText("Confirm");
+                    btnSetExpiration.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            setExpiration(position, DatePickerFragment.currentDateString);
+                            btnSetExpiration.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+        });
+    }
+
+    private void setExpiration(final int position, final String expires) {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
+            @Override
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray inventory = objects.get(0).getInventory();
+                inventory.remove(position);
+                objects.get(0).setInventory(inventory);
+                objects.get(0).saveInBackground();
+                try {
+                    JSONObject newItem = new JSONObject();
+                    newItem.put("item", ingredients.get(position));
+                    newItem.put("expires", expires);
+                    inventory.put(newItem);
+                    objects.get(0).setInventory(inventory);
+                    objects.get(0).saveInBackground();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

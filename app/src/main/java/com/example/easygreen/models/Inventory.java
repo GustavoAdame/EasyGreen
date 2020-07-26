@@ -11,6 +11,7 @@ import org.json.JSONArray;
 public class Inventory  extends ParseObject {
     public static final String KEY_user = "user";
     public static final String KEY_ingredient_list = "ingredient_list";
+    public static final String KEY_inventory = "inventory";
 
     public ParseObject getUser(){
         return getParseUser(KEY_user);
@@ -21,10 +22,11 @@ public class Inventory  extends ParseObject {
     }
 
     public JSONArray getInventory(){
-        return getJSONArray(KEY_ingredient_list);
+        return getJSONArray(KEY_inventory);
     }
 
     public void setInventory(JSONArray ingredients){
-        put(KEY_ingredient_list, ingredients);
+        put(KEY_inventory, ingredients);
     }
+
 }

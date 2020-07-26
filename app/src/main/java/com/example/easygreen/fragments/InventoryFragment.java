@@ -44,6 +44,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +57,6 @@ public class InventoryFragment extends Fragment {
     private RecyclerView rvInventory;
     private List<String> ingredients = new ArrayList<>();
     public String inventory_list = "";
-    private String expires;
-
-    public InventoryFragment() {}
-
-    public InventoryFragment(String expires) {
-        this.expires = expires;
-        Log.d("Gustavo", expires);
-    }
 
     /************* Initial State of Fragment ********************/
     @Override
@@ -184,8 +177,9 @@ public class InventoryFragment extends Fragment {
                     JSONArray inventory = objects.get(0).getInventory();
                     for (int i = 0; i < inventory.length(); i++) {
                         try {
-                            ingredients.add(inventory.getString(i));
-                            inventory_list += inventory.getString(i);
+                            String item = inventory.getJSONObject(i).getString("item");
+                            ingredients.add(item);
+                            inventory_list += item;
                             if (i != inventory.length() - 1) {
                                 inventory_list += ", ";
                             }
@@ -215,9 +209,15 @@ public class InventoryFragment extends Fragment {
             @Override
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray inventory = objects.get(0).getInventory();
-                inventory.put(name);
-                objects.get(0).setInventory(inventory);
-                objects.get(0).saveInBackground();
+                try {
+                    JSONObject newItem = new JSONObject();
+                    newItem.put("item", name);
+                    inventory.put(newItem);
+                    objects.get(0).setInventory(inventory);
+                    objects.get(0).saveInBackground();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
