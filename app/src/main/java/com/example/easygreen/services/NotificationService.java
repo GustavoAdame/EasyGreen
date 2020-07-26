@@ -31,10 +31,11 @@ public class NotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
 
-
+        int color = getResources().getColor(R.color.green);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Lastest Expiration Date")
+                .setContentTitle("Upcoming Expiration Date")
                 .setContentText(input)
+                .setColor(color)
                 .setSmallIcon(R.drawable.noun_leaves_1861557)
                 .setContentIntent(pendingIntent)
                 .build();

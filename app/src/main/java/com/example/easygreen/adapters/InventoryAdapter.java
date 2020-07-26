@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,15 +29,15 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.Date;
 
 import java.util.List;
 
-public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>  {
+public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.ViewHolder>{
     /*** Local Variables **********************/
     private Context context;
     private Context getContext;
     private TextView tvIngredientName;
-    private Button btnSetExpiration;
     private List<String> ingredients;
 
     /*** Constructor takes in a String List that represent list of ingredients ***************/
@@ -56,31 +57,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     /*** Add the following data into ViewHolder **********************/
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         tvIngredientName.setText(ingredients.get(position));
-
-        btnSetExpiration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
-                btnSetExpiration.setText("Confirm");
-                btnSetExpiration.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Snackbar.make(view, "Expiration: " + DatePickerFragment.currentDateString, Snackbar.LENGTH_SHORT).show();
-
-                        Intent serviceIntent = new Intent(getContext, NotificationService.class);
-                        serviceIntent.putExtra("inputExtra", DatePickerFragment.currentDateString);
-                        ContextCompat.startForegroundService(getContext, serviceIntent);
-
-                        setExpiration(position, DatePickerFragment.currentDateString);
-                        btnSetExpiration.setVisibility(View.INVISIBLE);
-                    }
-                });
-            }
-        });
-
     }
 
     private void setExpiration(final int position, final String expires) {
@@ -89,20 +67,15 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         inventory.findInBackground(new FindCallback<Inventory>() {
             @Override
             public void done(List<Inventory> objects, ParseException e) {
-                JSONArray inventory = objects.get(0).getInventory();
-                inventory.remove(position);
-                objects.get(0).setInventory(inventory);
-                objects.get(0).saveInBackground();
-                try {
-                    JSONObject newItem = new JSONObject();
-                    newItem.put("item", ingredients.get(position));
-                    newItem.put("expires", expires);
-                    inventory.put(newItem);
-                    objects.get(0).setInventory(inventory);
-                    objects.get(0).saveInBackground();
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                }
+                JSONArray expirations = objects.get(0).getExpirations();
+                    try {
+                        expirations.put(position, expires);
+                        objects.get(0).setExpirations(expirations);
+                        objects.get(0).saveInBackground();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                getOldestExpiration();
             }
         });
     }
@@ -119,8 +92,46 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvIngredientName = itemView.findViewById(R.id.tvIngredientName);
-            btnSetExpiration = itemView.findViewById(R.id.btnSetExpiration);
+            tvIngredientName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DialogFragment datePicker = new DatePickerFragment();
+                    datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
+
+                    Snackbar.make(view, "Setting Expiration...", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Confirm", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    setExpiration(getAdapterPosition(), DatePickerFragment.currentDateString);
+                                }
+                            }).show();
+                }
+            });
         }
+    }
+
+    private void getOldestExpiration() {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
+            @Override
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray expirations = objects.get(0).getExpirations();
+                for(int i = 0; i < expirations.length(); i++){
+                    try {
+                        String min = expirations.getString(0);
+                        if(expirations.getString(i).compareTo(min) < 0){
+                            min = expirations.getString(i);
+                            Intent serviceIntent = new Intent(getContext, NotificationService.class);
+                            serviceIntent.putExtra("inputExtra", min);
+                            ContextCompat.startForegroundService(getContext, serviceIntent);
+                        }
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }

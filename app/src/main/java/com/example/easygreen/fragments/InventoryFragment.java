@@ -78,7 +78,7 @@ public class InventoryFragment extends Fragment {
                     deleteItemInventory(position);
                     Snackbar.make(rvInventory, prevItem + " Deleted!", Snackbar.LENGTH_SHORT).show();
                     ingredients.remove(position);
-                    inventoryAdapter.notifyItemRemoved(position);
+                    inventoryAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -135,6 +135,12 @@ public class InventoryFragment extends Fragment {
                 inventory.remove(position);
                 objects.get(0).setInventory(inventory);
                 objects.get(0).saveInBackground();
+
+                JSONArray expirations = objects.get(0).getExpirations();
+                expirations.remove(position);
+                objects.get(0).setExpirations(expirations);
+                objects.get(0).saveInBackground();
+
             }
         });
     }
@@ -165,7 +171,7 @@ public class InventoryFragment extends Fragment {
                     JSONArray inventory = objects.get(0).getInventory();
                     for (int i = 0; i < inventory.length(); i++) {
                         try {
-                            String item = inventory.getJSONObject(i).getString("item");
+                            String item = inventory.getString(i);
                             ingredients.add(item);
                             inventory_list += item;
                             if (i != inventory.length() - 1) {
@@ -198,15 +204,9 @@ public class InventoryFragment extends Fragment {
             @Override
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray inventory = objects.get(0).getInventory();
-                try {
-                    JSONObject newItem = new JSONObject();
-                    newItem.put("item", name);
-                    inventory.put(newItem);
-                    objects.get(0).setInventory(inventory);
-                    objects.get(0).saveInBackground();
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                }
+                inventory.put(name);
+                objects.get(0).setInventory(inventory);
+                objects.get(0).saveInBackground();
             }
         });
     }
