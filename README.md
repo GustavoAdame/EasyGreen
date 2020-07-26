@@ -63,7 +63,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 - [X] User are able to create an inventory from a list of ingridents
 - [X] User are able to create a shopping list 
 - [X] User can see a list of recipes which they can select and read from given ingridents 
-- [ ] User can share a post on Facebook from the app
+- [X] User can share a post on Facebook from the app
 
 **Optional Nice-to-have Stories**
 
