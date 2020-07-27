@@ -23,7 +23,7 @@
         <activity android:name=".activities.UserLoginActivity" />
         <activity android:name=".activities.RecipeDetailsActivity" />
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider659694868090895"
+        <provider android:authorities="com.facebook.app.FacebookContentProvider2326856904290640"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
 
@@ -39,9 +39,8 @@
 
         <service android:name=".services.NotificationService" />
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
         <activity android:name=".activities.LoginActivity">
             <intent-filter>

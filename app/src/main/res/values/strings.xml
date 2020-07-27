@@ -7,8 +7,8 @@
     <string name="skip_to_start">Skip to Start</string>
 
 
-    <string name="facebook_app_id">659694868090895</string>
-    <string name="fb_login_protocol_scheme">fb659694868090895</string>
+    <string name="facebook_app_id">2326856904290640</string>
+    <string name="fb_login_protocol_scheme">fb2326856904290640</string>
     <string name="API_Key">375469b443e24f9fa1b3270fad4d7402</string>
 
     <string-array name="Ingredient">
