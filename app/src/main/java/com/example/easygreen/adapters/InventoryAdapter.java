@@ -144,7 +144,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 for(int i = 0; i < expirations.length(); i++){
                     try {
                         String min = expirations.getString(0);
-                        if(expirations.getString(i).compareTo(min) < 0){
+                        if(expirations.getString(i).compareTo(min) <= 0){
                             min = expirations.getString(i);
                             Intent serviceIntent = new Intent(getContext, NotificationService.class);
                             serviceIntent.putExtra("inputExtra", min);
