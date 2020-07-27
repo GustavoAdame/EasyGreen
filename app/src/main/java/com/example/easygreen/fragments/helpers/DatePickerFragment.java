@@ -28,8 +28,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        if(DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime()) != null){
-            currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        if(DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime()) != null){
+            currentDateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
         }
     }
 }

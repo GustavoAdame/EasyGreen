@@ -2,6 +2,7 @@ package com.example.easygreen.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.util.List;
@@ -40,6 +43,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private Context getContext;
     private TextView tvIngredientName;
     private List<String> ingredients;
+    private boolean run = false;
 
     /*** Constructor takes in a String List that represent list of ingredients ***************/
     public InventoryAdapter(List<String> ingredients, Context getContext) {
@@ -73,10 +77,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                         expirations.put(position, expires);
                         objects.get(0).setExpirations(expirations);
                         objects.get(0).saveInBackground();
+                        run = true;
                     } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
-                getOldestExpiration();
             }
         });
     }
@@ -98,15 +102,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                     DialogFragment datePicker = new DatePickerFragment();
                     datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
 
-                    Snackbar.make(view, "Setting Expiration...", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Setting Expiration...", Snackbar.LENGTH_INDEFINITE)
                             .setAction("Confirm", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     setExpiration(getAdapterPosition(), DatePickerFragment.currentDateString);
                                 }
                             }).show();
+                    getOldestExpiration();
                 }
             });
+
 
             tvIngredientName.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -126,7 +132,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray expirations = objects.get(0).getExpirations();
                 try {
-                    Snackbar.make(view, "Expires on: " + expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Expires on: " +
+                            expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -141,11 +148,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             @Override
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray expirations = objects.get(0).getExpirations();
-                for(int i = 0; i < expirations.length(); i++){
+                for(int i = 1; i < expirations.length(); i++){
                     try {
                         String min = expirations.getString(0);
-                        if(expirations.getString(i).compareTo(min) <= 0){
-                            min = expirations.getString(i);
+                        String current = expirations.getString(i);
+                        if(min.compareTo(current) > 0){
+                            min = current;
+                        }
+                        if(i == expirations.length()-1){
                             Intent serviceIntent = new Intent(getContext, NotificationService.class);
                             serviceIntent.putExtra("inputExtra", min);
                             ContextCompat.startForegroundService(getContext, serviceIntent);
