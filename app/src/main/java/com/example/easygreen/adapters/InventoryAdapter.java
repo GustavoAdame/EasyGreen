@@ -43,7 +43,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     private Context getContext;
     private TextView tvIngredientName;
     private List<String> ingredients;
-    private boolean run = false;
 
     /*** Constructor takes in a String List that represent list of ingredients ***************/
     public InventoryAdapter(List<String> ingredients, Context getContext) {
@@ -66,25 +65,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         tvIngredientName.setText(ingredients.get(position));
     }
 
-    private void setExpiration(final int position, final String expires) {
-        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
-        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
-        inventory.findInBackground(new FindCallback<Inventory>() {
-            @Override
-            public void done(List<Inventory> objects, ParseException e) {
-                JSONArray expirations = objects.get(0).getExpirations();
-                    try {
-                        expirations.put(position, expires);
-                        objects.get(0).setExpirations(expirations);
-                        objects.get(0).saveInBackground();
-                        run = true;
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
-                    }
-            }
-        });
-    }
-
     /*** Part of the Adapter Interface but not in use **********************/
     @Override
     public int getItemCount() {
@@ -99,6 +79,14 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             tvIngredientName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    getExpirationDate(view, getAdapterPosition());
+                }
+            });
+
+
+            tvIngredientName.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
                     DialogFragment datePicker = new DatePickerFragment();
                     datePicker.show(((AppCompatActivity) getContext).getSupportFragmentManager(), "date picker");
 
@@ -107,21 +95,31 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                                 @Override
                                 public void onClick(View view) {
                                     setExpiration(getAdapterPosition(), DatePickerFragment.currentDateString);
+                                    getOldestExpiration();
                                 }
                             }).show();
-                    getOldestExpiration();
-                }
-            });
-
-
-            tvIngredientName.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    getExpirationDate(view, getAdapterPosition());
                     return true;
                 }
             });
         }
+    }
+
+    private void setExpiration(final int position, final String expires) {
+        ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
+        inventory.whereEqualTo("user", ParseUser.getCurrentUser());
+        inventory.findInBackground(new FindCallback<Inventory>() {
+            @Override
+            public void done(List<Inventory> objects, ParseException e) {
+                JSONArray expirations = objects.get(0).getExpirations();
+                try {
+                    expirations.put(position, expires);
+                    objects.get(0).setExpirations(expirations);
+                    objects.get(0).saveInBackground();
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private void getExpirationDate(final View view, final int adapterPosition) {
