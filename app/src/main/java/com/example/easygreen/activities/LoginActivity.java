@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.btnFBLogin);
+
+
         ivLogo = findViewById(R.id.ivLogo);
         ivLogo.setBackgroundResource(R.drawable.animation);
         iconAnimate = (AnimationDrawable) ivLogo.getBackground();

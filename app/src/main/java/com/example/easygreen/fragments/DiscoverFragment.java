@@ -12,19 +12,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
+import com.example.easygreen.adapters.VideoAdapter;
+import com.example.easygreen.models.Video;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
@@ -32,9 +41,14 @@ import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -48,7 +62,12 @@ public class DiscoverFragment extends Fragment {
     private File photoFile;
     private String photoFileName = "photo.jpg";
     private ShareDialog shareDialog;
-    private Button shareButton;
+    private ImageView shareButton;
+    private String accessToken;
+    /***** Local Variables *************/
+    private ViewPager2 vpVideoContainer;
+    private VideoAdapter videoAdapter;
+    private List<Video> videoFeed = new ArrayList<>();;
 
     /****** Inflate Fragment layout ************/
     @Override
@@ -60,13 +79,23 @@ public class DiscoverFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        shareButton = getActivity().findViewById(R.id.btnShareFacebook);
+        accessToken = getActivity().getResources().getString(R.string.access_token);
+        shareButton = getActivity().findViewById(R.id.ivShareFacebook);
+        getEasyGreenFeed();
+        displayFeed(getActivity());
+
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
             }
         });
+    }
+
+    private void displayFeed(FragmentActivity activity) {
+        vpVideoContainer = getActivity().findViewById(R.id.vpVideoContainer);
+        videoAdapter = new VideoAdapter(videoFeed);
+        vpVideoContainer.setAdapter(videoAdapter);
     }
 
     @Override
@@ -106,17 +135,32 @@ public class DiscoverFragment extends Fragment {
                 .scheme("https")
                 .host("graph.facebook.com")
                 .addPathSegment("EasyGreenFBU")
-                .addPathSegment("feed")
+                .addPathSegment("videos")
+                .addQueryParameter("fields", "source,title,description")
                 .build();
 
-        final String request = url+"?access_token=" + AccessToken.getCurrentAccessToken();
+        final String request = url+"&access_token="+accessToken;
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d("getEasyGreenFeed()", "OnSuccess");
-                JSONObject a = json.jsonObject;
-                int b = statusCode;
+                JSONObject feedJson = json.jsonObject;
+                try {
+                    JSONArray data = feedJson.getJSONArray("data");
+                    for(int i = 0; i < data.length(); i++){
+                        Video currentVideo = new Video();
+                        JSONObject videoObject = data.getJSONObject(i);
+
+                        currentVideo.setVideoURL(videoObject.getString("source"));
+                        currentVideo.setVideoTitle(videoObject.getString("title"));
+                        currentVideo.setVideoDescription(videoObject.getString("description") );
+                        videoFeed.add(currentVideo);
+                        videoAdapter.notifyDataSetChanged();
+                    }
+                    Log.d("Gustavo", "onSuccess: " + videoFeed.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {

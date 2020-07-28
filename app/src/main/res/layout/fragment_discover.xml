@@ -3,30 +3,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".fragments.DiscoverFragment">
 
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvPostText"
-        android:layout_margin="16dp"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpVideoContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
 
-    <Button
-        android:id="@+id/btnShareFacebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="@color/com_facebook_button_background_color"
-        android:drawableLeft="@drawable/com_facebook_button_icon"
-        android:text="Share"
-        android:clickable="true" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp">
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivLike"
+                android:src="@drawable/like_video"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/tvLikeCount"
+                android:layout_below="@+id/ivLike"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:text="125"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivComment"
+                android:src="@drawable/comment_video"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/tvCommentCount"
+                android:layout_below="@+id/ivComment"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:text="1215"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivShareFacebook"
+                android:src="@drawable/share_facebook"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/tvShareCount"
+                android:layout_below="@+id/ivShareFacebook"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_width="50dp"
+                android:text="500"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
 
 </RelativeLayout>
 

@@ -10,6 +10,7 @@
     <string name="facebook_app_id">2326856904290640</string>
     <string name="fb_login_protocol_scheme">fb2326856904290640</string>
     <string name="API_Key">375469b443e24f9fa1b3270fad4d7402</string>
+    <string name="access_token">EAAhEQ5c5MVABALZCp5JtAcwGZAh7nu8OMgWuFTLVS56fHRMBz5bxtHA4ZAuTO5QncZCa9b9yCZA5HNKMQQvhLhaIhvwrD41BifodeJAsZAsCz93w9Llxs6HWwPlENm6zskJLPjUVOXTPsBohMk2Smp1ljZCxeeoklLCZCanOZBtBJjSzl8JSd6rAYEJ3QHhDfLCQcV9VGzRhbgwZDZD</string>
 
     <string-array name="Ingredient">
         <item>Almond Milk</item>

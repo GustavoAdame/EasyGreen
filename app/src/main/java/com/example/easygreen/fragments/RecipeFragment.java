@@ -87,7 +87,7 @@ public class RecipeFragment extends Fragment {
                         item.setName(jsonObject.getString("title"));
                         item.setURL(jsonObject.getString("image"));
                         recipes.add(item);
-                    };
+                    }
                     recipeAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
