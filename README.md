@@ -67,9 +67,9 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 **Optional Nice-to-have Stories**
 
-- [ ] Keep track of user food items expiration dates and send app notifications to alert user  
+- [X] Keep track of user food items expiration dates and send app notifications to alert user  
 - [ ] Have a nice graph of current inventory broken down in categories 
-- [ ] Have an activity for video content from community  
+- [X] Have an activity for video content from community  
 
 ### 2. Screen Archetypes
 
