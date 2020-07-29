@@ -47,14 +47,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 mediaPlayer.start();
             }
         });
-
-        vvVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vvVideo.pause();
-            }
-        });
-
     }
 
     @Override
