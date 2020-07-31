@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "591892396563",
+    "firebase_url": "https://easygreen-ddd3e.firebaseio.com",
+    "project_id": "easygreen-ddd3e",
+    "storage_bucket": "easygreen-ddd3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591892396563:android:5a54d9a274df9a7f52dde6",
+        "android_client_info": {
+          "package_name": "com.example.easygreen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591892396563-bddbdhcnvf3vrrme6ijunj2btbf7eibv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.easygreen",
+            "certificate_hash": "934e1c3e4397005c9a0450ed5049fbea2ceffe8e"
+          }
+        },
+        {
+          "client_id": "591892396563-maem6fucbme5qap2buolcubsfp8tje6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSIRV3TYOnhJ4DWYqnBHoOwxPAkDUJ-hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591892396563-maem6fucbme5qap2buolcubsfp8tje6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
