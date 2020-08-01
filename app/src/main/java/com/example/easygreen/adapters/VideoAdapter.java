@@ -1,34 +1,23 @@
 package com.example.easygreen.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easygreen.R;
 import com.example.easygreen.models.Video;
-import com.facebook.share.widget.ShareDialog;
 
-import java.io.File;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
     private Context context;
@@ -50,6 +39,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         return new VideoAdapter.ViewHolder(view);
     }
 
+    /*** Add the following data into ViewHolder **********************/
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         currentVideo = videoFeed.get(position);
@@ -86,11 +76,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         });
     }
 
+    /*** Part of the Adapter Interface but not in use **********************/
     @Override
     public int getItemCount() {
         return videoFeed.size();
     }
 
+    /*** Inflate ViewHolder's view elements **********************/
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

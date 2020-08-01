@@ -34,6 +34,7 @@ public class ParseClient extends Application {
         createNotificationChannel();
     }
 
+    /***** Start app notification and setup service *********/
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
