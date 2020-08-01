@@ -29,22 +29,24 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private TextView tvPreptime, tvServingSize, tvCalorieServing;
 
     /******** Defaults ************************/
-    public final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
-    private String recipeID = "";
+    public String API_Key;
+    private String recipeID;
 
     /************* Initial State of Activity ********************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
+        API_Key = getResources().getString(R.string.API_Key);
         displayViews();
+
         Intent intent = getIntent();
         if(intent != null){
             recipeID = intent.getStringExtra("id");
         }
+
         getRecipeDetails(recipeID);
         getRecipeInstruction(recipeID);
-
     }
 
     /***************** Inflating Views *****************/
@@ -113,16 +115,15 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONArray jsonArray = json.jsonArray;
                 try {
-                    String a = "";
-                    //String array of steps
+                    String step = "";
                     JSONArray steps = jsonArray.getJSONObject(0).getJSONArray("steps");
                     for(int i = 0; i < steps.length(); i++){
                         String stepNumber  = steps.getJSONObject(i).getString("number");
                         String stepInstruction = steps.getJSONObject(i).getString("step");
-                       a += ("Step " + stepNumber + ": " + stepInstruction);
-                       a += "\n\n";
+                        step += ("Step " + stepNumber + ": " + stepInstruction);
+                        step += "\n\n";
                     }
-                    tvRecipeDescription.setText(a);
+                    tvRecipeDescription.setText(step);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
