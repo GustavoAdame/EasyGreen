@@ -1,8 +1,6 @@
 package com.example.easygreen.fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -107,6 +105,7 @@ public class AccountFragment extends Fragment {
         btnTakePicture = getActivity().findViewById(R.id.btnTakePicture);
     }
 
+    /****** Update image to the server *******/
     private void changeImage(ParseUser currentUser, File photoFile) {
         currentUser.remove("profileImage");
         currentUser.put("profileImage", new ParseFile(photoFile));
