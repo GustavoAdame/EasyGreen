@@ -2,14 +2,10 @@ package com.example.easygreen.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +17,6 @@ import com.example.easygreen.R;
 import com.example.easygreen.fragments.helpers.DatePickerFragment;
 import com.example.easygreen.models.Inventory;
 import com.example.easygreen.services.NotificationService;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,10 +25,6 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import java.util.List;
 
@@ -104,6 +95,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
+    /*** This updates the database when user sets expiration date **************/
     private void setExpiration(final int position, final String expires) {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
         inventory.whereEqualTo("user", ParseUser.getCurrentUser());
@@ -122,6 +114,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         });
     }
 
+    /*** Gets current item expiration date from server **************/
     private void getExpirationDate(final View view, final int adapterPosition) {
         ParseQuery<Inventory> query = ParseQuery.getQuery(Inventory.class);
         query.whereEqualTo("user", ParseUser.getCurrentUser());
@@ -139,6 +132,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         });
     }
 
+    /*** Have a app notification with upcoming expiration date *************/
     private void getOldestExpiration() {
         ParseQuery<Inventory> inventory = ParseQuery.getQuery(Inventory.class);
         inventory.whereEqualTo("user", ParseUser.getCurrentUser());
@@ -146,16 +140,20 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             @Override
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray expirations = objects.get(0).getExpirations();
+                JSONArray inventory = objects.get(0).getInventory();
+                int j = 0;
                 for(int i = 1; i < expirations.length(); i++){
                     try {
                         String min = expirations.getString(0);
                         String current = expirations.getString(i);
                         if(min.compareTo(current) > 0){
                             min = current;
+                            j = i;
                         }
                         if(i == expirations.length()-1){
                             Intent serviceIntent = new Intent(getContext, NotificationService.class);
                             serviceIntent.putExtra("inputExtra", min);
+                            serviceIntent.putExtra("inputName", inventory.getString(j));
                             ContextCompat.startForegroundService(getContext, serviceIntent);
                         }
                     } catch (JSONException ex) {
