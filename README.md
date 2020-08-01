@@ -83,7 +83,7 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 * Shopping List Screen 
     * User can type anything and creates a list of items 
 * Discover Screen 
-   * In progress
+   * User can swipe up to see video content and post a video
  
 
 ### 3. Navigation
@@ -97,8 +97,6 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 * Account
 
 ## Demo
-
- 
 <p align="center">
 <a href="https://firebasestorage.googleapis.com/v0/b/easygreen-ddd3e.appspot.com/o/Demo2.mp4?alt=media&token=9a1f8b3f-e12b-4df9-b824-519fbae89ce3">
     <img src="https://firebasestorage.googleapis.com/v0/b/easygreen-ddd3e.appspot.com/o/Screen%20Shot%202020-08-01%20at%205.30.47%20PM.png?alt=media&token=4cb77cec-89ae-45d8-886c-875067b12b3d" 
@@ -112,14 +110,33 @@ MP4 created with [KAP](https://getkap.co/)
 
 
 ## Schema 
-**User** *(username, firstName, lastName, profileImage)*
-<br> **Inventory** *(ingredient_list, **User**\*)*
+#### User
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | username      | String   | Required for user sign in |
+   | password      | String   | Hidden - Required for sign in |
+   | firstName     | String   | User first name |
+   | lastName      | String   | User last name |
+   | profileImage  | File     | User can take a picture |
+#### Inventory
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | inventory     | JSONArray| An array of items' name  |
+   | expiration    | JSONArray| An array of items' expiration as Strings |
+   | user          | Pointer<User> | Associates Inventory to a User |
+    
+#### ShoppingList
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | shopping_list | JSONArray| An array of items' name  |
+   | user          | Pointer<User> | Associates Shopping List to a User |
 
 ### Networking
 **Spoonacular API**
-<br> Base URL: https://spoonacular.com/food-api/docs#Search-Recipes-by-Ingredients
+<br> Base URL:https://api.spoonacular.com/recipes/
 
 | HTTP Verb | Endpoint | Description|
 | -------- | -------- | -------- |
 | ` GET `    | /findByIngredients     | Search Recipes by Ingredients    |
 | ` GET `    | /{id}/information      | Get information about a recipe  |
+| ` GET `    | {id}/analyzedInstructions   | Get a recipe instructions |
