@@ -3,9 +3,6 @@ package com.example.easygreen.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,10 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,43 +30,25 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
 import com.example.easygreen.adapters.VideoAdapter;
 import com.example.easygreen.models.Video;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.appevents.ml.Utils;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
-import com.facebook.share.widget.ShareButton;
-import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.Response;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -80,15 +56,17 @@ public class DiscoverFragment extends Fragment {
     /***** Local Variables *************/
     private ImageView shareButton;
     public String accessToken;
-    /***** Local Variables *************/
+    public String title = "";
+    public String description = "";
+    private String videoFileName = "post.mp4";
+
+    /***** Local references *************/
     private ViewPager2 vpVideoContainer;
     private VideoAdapter videoAdapter;
     private List<Video> videoFeed = new ArrayList<>();
     private File videoFile;
-    private String videoFileName = "post.mp4";
     private StorageReference mStorageRef;
-    String title = "";
-    String description = "";
+
 
     /****** Inflate Fragment layout ************/
     @Override
@@ -119,6 +97,7 @@ public class DiscoverFragment extends Fragment {
         vpVideoContainer.setAdapter(videoAdapter);
     }
 
+    /************* Send video to Facebook Page - the feed ****************/
     public void postVideo(String takenVideo) throws JSONException {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
@@ -134,6 +113,7 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d("Gustavo", "onSuccess: " + json);
+                getEasyGreenFeed();
             }
 
             @Override
@@ -143,7 +123,7 @@ public class DiscoverFragment extends Fragment {
         });
     }
 
-
+    /***** Get all videos from Facebook Page - acts as a feed *******/
     private void getEasyGreenFeed() {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
@@ -221,6 +201,7 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
+    /******* Send video to Firebase cloud storage **********/
     private void uploadFirebase(String videoFile) {
         Uri file = Uri.fromFile(new File(videoFile));
         mStorageRef = mStorageRef.child("post.mp4");
@@ -245,6 +226,7 @@ public class DiscoverFragment extends Fragment {
                 });
     }
 
+    /******* User input for creating a post **********/
     private void getUserInput(final String fileLink) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("Creating a new Post");
