@@ -3,7 +3,6 @@ package com.example.easygreen.activities;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,34 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easygreen.R;
 import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.LoginStatusCallback;
 import com.facebook.Profile;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.facebook.ParseFacebookUtils;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     /***** Local Variables **********/
-    private LoginButton loginButton;
-    private ImageView ivLogo;
     AnimationDrawable iconAnimate;
 
     @Override
@@ -53,18 +38,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginButton = findViewById(R.id.btnFBLogin);
 
-
-        ivLogo = findViewById(R.id.ivLogo);
+        ImageView ivLogo = findViewById(R.id.ivLogo);
         ivLogo.setBackgroundResource(R.drawable.animation);
         iconAnimate = (AnimationDrawable) ivLogo.getBackground();
 
-        if (ParseUser.getCurrentUser() != null || AccessToken.getCurrentAccessToken() != null) {
+        if (ParseUser.getCurrentUser() != null ||
+                AccessToken.getCurrentAccessToken() != null) {
             goMainActivity();
         }
     }
 
+    /***** Logo animation starts when screen opens ****************/
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
@@ -73,7 +58,10 @@ public class LoginActivity extends AppCompatActivity {
 
     /***** User clicks on [Continue with Facebook] ****************/
     public void openFB(View view) {
-        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, Arrays.asList("public_profile", "pages_manage_posts", "pages_read_user_content"), new LogInCallback() {
+        ParseFacebookUtils.
+                logInWithReadPermissionsInBackground(this,
+                        Arrays.asList("public_profile", "pages_manage_posts", "pages_read_user_content"),
+                        new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException err) {
                 if(err != null){
@@ -94,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /***** Get Facebook account info and store it in the backend ****************/
     private void storeFacebookData(final ParseUser user) {
         Profile currentProfile = Profile.getCurrentProfile();
         user.put("firstName", currentProfile.getFirstName());
