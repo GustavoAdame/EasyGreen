@@ -14,73 +14,9 @@
     </VideoView>
 
     <LinearLayout
-        android:id="@+id/engagementContainer"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        android:weightSum="4"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/ivLike"
-                android:layout_weight="1"
-                android:src="@drawable/unlike_post"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:clickable="true" />
-
-            <TextView
-                android:id="@+id/tvLikeCount"
-                android:layout_weight="1"
-                android:layout_below="@+id/ivLike"
-                android:textAlignment="center"
-                android:layout_marginBottom="16dp"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content"
-                android:layout_width="50dp"
-                android:text="0"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/ivComment"
-                android:layout_weight="1"
-                android:src="@drawable/comment_video"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:clickable="true" />
-
-            <TextView
-                android:id="@+id/tvCommentCount"
-                android:layout_weight="1"
-                android:layout_below="@+id/ivComment"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_width="50dp"
-                android:text="0"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/engagementContainer"
         android:layout_margin="16dp"
         android:weightSum="2"
         android:orientation="vertical">

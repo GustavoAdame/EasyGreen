@@ -23,7 +23,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     /*** Local Variables **********************/
     private Context context;
     public ImageView ivRecipeImage;
-    public TextView tvRecipeTag;
     public TextView tvRecipeTitle;
     private CardView cvRecipe;
     public List<Recipe> recipes;
@@ -74,7 +73,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvRecipeTitle = itemView.findViewById(R.id.tvRecipeTitle);
-            tvRecipeTag = itemView.findViewById(R.id.tvRecipeTag);
             ivRecipeImage = itemView.findViewById(R.id.ivRecipeImage);
             cvRecipe = itemView.findViewById(R.id.cvRecipe);
         }

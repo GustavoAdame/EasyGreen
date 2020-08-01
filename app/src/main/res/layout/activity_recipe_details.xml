@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".activities.RecipeDetailsActivity">
 
     <ImageView
@@ -20,6 +21,7 @@
         android:layout_below="@+id/ivRecipeImage"
         android:layout_margin="16dp"
         android:textAlignment="center"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -46,6 +48,7 @@
             <TextView
                 android:id="@+id/tvPreptime"
                 android:layout_marginLeft="45dp"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ivPrepTime"
@@ -56,6 +59,7 @@
                 android:layout_toRightOf="@id/tvPreptime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
                 android:layout_below="@+id/ivPrepTime"
                 android:layout_centerHorizontal="true"
                 android:textSize="14sp" />
@@ -77,6 +81,7 @@
             <TextView
                 android:id="@+id/tvServingSize"
                 android:layout_width="wrap_content"
+                android:textColor="@android:color/white"
                 android:layout_marginLeft="45dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ivServings"
@@ -87,6 +92,7 @@
                 android:layout_toRightOf="@id/tvServingSize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
                 android:layout_below="@+id/ivServings"
                 android:layout_centerHorizontal="true"
                 android:textSize="14sp" />
@@ -107,6 +113,7 @@
 
             <TextView
                 android:id="@+id/tvCalorieServing"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -117,6 +124,7 @@
                 android:text=" cal"
                 android:layout_toRightOf="@id/tvCalorieServing"
                 android:layout_width="wrap_content"
+                android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ivCalories"
                 android:layout_centerHorizontal="true"
@@ -129,9 +137,10 @@
         android:id="@+id/tvRecipeDescription"
         android:layout_margin="8dp"
         android:layout_below="@id/llRecipeContainer"
-        android:textSize="14dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         android:scrollbars="vertical"
+        android:textColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -7,6 +7,9 @@
         android:id="@+id/cbSelect"
         android:layout_margin="2dp"
         android:layout_weight="1"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"/>

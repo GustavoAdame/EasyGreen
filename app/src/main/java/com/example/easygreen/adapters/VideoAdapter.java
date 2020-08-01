@@ -22,8 +22,7 @@ import java.util.List;
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
     private Context context;
     private VideoView vvVideo;
-    private TextView tvVideoTitle, tvVideoDescription, tvLikeCount;
-    private ImageView ivLike;
+    private TextView tvVideoTitle, tvVideoDescription;
     private List<Video> videoFeed;
     private Video currentVideo;
 
@@ -46,28 +45,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         tvVideoTitle.setText(currentVideo.getVideoTitle());
         tvVideoDescription.setText(currentVideo.getVideoDescription());
         vvVideo.setVideoURI(Uri.parse(currentVideo.getVideoURL()));
-
-        if(currentVideo.isIsLiked()){
-            ivLike.setImageResource(R.drawable.like_post);
-        } else{
-            ivLike.setImageResource(R.drawable.unlike_post);
-        }
-
-        ivLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(currentVideo.isIsLiked()){
-                    ivLike.setImageResource(R.drawable.unlike_post);
-                    currentVideo.setIsLiked(false);
-                    tvLikeCount.setText(Integer.toString(currentVideo.getLikeCount()));
-                } else{
-                    ivLike.setImageResource(R.drawable.like_post);
-                    currentVideo.setIsLiked(true);
-                    tvLikeCount.setText(Integer.toString(currentVideo.getLikeCount()+1));
-                }
-            }
-        });
-
         vvVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -89,8 +66,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             vvVideo = itemView.findViewById(R.id.vvVideo);
             tvVideoTitle = itemView.findViewById(R.id.tvVideoTitle);
             tvVideoDescription = itemView.findViewById(R.id.tvVideoDescription);
-            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
-            ivLike = itemView.findViewById(R.id.ivLike);
         }
     }
 

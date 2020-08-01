@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground2"
+    android:background="@drawable/image"
     android:textAlignment="center"
     tools:context=".activities.LoginActivity">
 
@@ -29,7 +29,7 @@
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="36sp" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:layout_marginTop="200dp"
         android:layout_marginBottom="-38dp"
         android:text="@string/committed_to_be_green"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="italic" />
 
@@ -78,7 +78,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:text="@string/or"
-        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <Button
