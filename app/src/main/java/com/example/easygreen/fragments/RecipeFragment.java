@@ -33,13 +33,14 @@ public class RecipeFragment extends Fragment {
     private List<Recipe> recipes = new ArrayList<>();
     private RecyclerView rvRecipes;
     /******** Defaults ************************/
-    public final String API_Key = "375469b443e24f9fa1b3270fad4d7402";
+    public String API_Key;
     public String inventory_list = "Chicken Breast, Brown Rice, Black Beans, Queso Fresco";
 
     /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        API_Key = getActivity().getResources().getString(R.string.API_Key);
         Bundle fromMainActivity = this.getArguments();
         if(fromMainActivity != null){
             inventory_list = fromMainActivity.getString("inventory");
