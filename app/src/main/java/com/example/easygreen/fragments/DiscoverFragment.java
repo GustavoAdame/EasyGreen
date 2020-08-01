@@ -113,7 +113,6 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d("Gustavo", "onSuccess: " + json);
-                getEasyGreenFeed();
             }
 
             @Override
@@ -243,6 +242,7 @@ public class DiscoverFragment extends Fragment {
                 description = inputDescription.getText().toString();
                 try {
                     postVideo(fileLink);
+                    getEasyGreenFeed();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
