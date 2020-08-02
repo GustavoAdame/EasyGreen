@@ -98,13 +98,14 @@ https://www.npr.org/2012/09/21/161551772/the-ugly-truth-about-food-waste-in-amer
 
 ## Demo
 <p align="center">
-<a href="https://firebasestorage.googleapis.com/v0/b/easygreen-ddd3e.appspot.com/o/Demo2.mp4?alt=media&token=9a1f8b3f-e12b-4df9-b824-519fbae89ce3">
+<a href="https://firebasestorage.googleapis.com/v0/b/easygreen-ddd3e.appspot.com/o/EasyGreen.mp4?alt=media&token=991c9ba3-3e85-497d-9285-981998a07b47">
     <img src="https://firebasestorage.googleapis.com/v0/b/easygreen-ddd3e.appspot.com/o/Screen%20Shot%202020-08-01%20at%205.30.47%20PM.png?alt=media&token=4cb77cec-89ae-45d8-886c-875067b12b3d" 
     height="750" width="400"></a>
 </p>
 
 <p align="center">
-Click on image to open Demo <br>
+Click on image to open Demo<br> 
+    
 MP4 created with [KAP](https://getkap.co/)
 </p>
 
