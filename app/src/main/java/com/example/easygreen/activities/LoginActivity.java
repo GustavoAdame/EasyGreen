@@ -3,6 +3,7 @@ package com.example.easygreen.activities;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = "Gustavo";
     /***** Local Variables **********/
     AnimationDrawable iconAnimate;
 
@@ -67,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(err != null){
                     Toast.makeText(LoginActivity.this, "Uh oh. Error occurred " + err.toString(), Toast.LENGTH_SHORT).show();
                 }
-                if (user == null) {
-                } else if (user.isNew()) {
+
+                if (user.isNew()) {
                     //User signed up and logged in through Facebook
                     storeFacebookData(user);
                     if(createInventory(user) && createShoppingList(user)){
