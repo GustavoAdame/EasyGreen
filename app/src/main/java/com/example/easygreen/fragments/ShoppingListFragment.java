@@ -73,11 +73,12 @@ public class ShoppingListFragment extends Fragment {
                 if(direction == ItemTouchHelper.LEFT){
                     final int position = viewHolder.getAdapterPosition();
 
-                    final String prevItem = items.get(position);
+                    String prevItem = items.get(position);
                     deleteItemShopping(position);
                     Snackbar.make(rvShoppingList, prevItem + " Deleted!", Snackbar.LENGTH_SHORT).show();
                     items.remove(position);
                     shoppingAdapter.notifyItemRemoved(position);
+                    rvShoppingList.setAdapter(shoppingAdapter);
                 }
             }
 

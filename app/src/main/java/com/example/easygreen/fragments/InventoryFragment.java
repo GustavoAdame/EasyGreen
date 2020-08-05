@@ -3,6 +3,7 @@ package com.example.easygreen.fragments;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,13 +72,16 @@ public class InventoryFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if(direction == ItemTouchHelper.LEFT){
-                    final int position = viewHolder.getAdapterPosition();
+                    int position = viewHolder.getAdapterPosition();
 
-                    final String prevItem = ingredients.get(position);
+                    Log.d("Gustavo", "onSwiped - Before: " + ingredients.size() + " list: "+ ingredients.toString());
+                    String prevItem = ingredients.get(position);
                     deleteItemInventory(position);
-                    Snackbar.make(rvInventory, prevItem + " Deleted!", Snackbar.LENGTH_SHORT).show();
                     ingredients.remove(position);
-                    inventoryAdapter.notifyDataSetChanged();
+                    Snackbar.make(rvInventory, prevItem + " Deleted!", Snackbar.LENGTH_SHORT).show();
+                    inventoryAdapter.notifyItemRemoved(position);
+                    rvInventory.setAdapter(inventoryAdapter);
+                    Log.d("Gustavo", "onSwiped - After: " + ingredients.size() + " list: "+ ingredients.toString());
                 }
             }
 
@@ -155,6 +159,7 @@ public class InventoryFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
                 updateInventory(item);
+                actvAdd.setText("");
             }
         });;
     }
@@ -186,13 +191,12 @@ public class InventoryFragment extends Fragment {
         }
     }
 
-
     /****** Update changes to database and application ****************************/
     private void updateInventory(String item) {
         addInventory(item);
         ingredients.add(item);
-        inventoryAdapter.notifyDataSetChanged();
         Snackbar.make(rvInventory, item + " Added!", Snackbar.LENGTH_SHORT).show();
+        inventoryAdapter.notifyItemInserted(ingredients.size()-1);
         inventory_list += ", " + item;
     }
 

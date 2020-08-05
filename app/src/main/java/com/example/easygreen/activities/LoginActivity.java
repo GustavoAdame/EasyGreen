@@ -26,7 +26,6 @@ import org.json.JSONArray;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "Gustavo";
     /***** Local Variables **********/
     AnimationDrawable iconAnimate;
 

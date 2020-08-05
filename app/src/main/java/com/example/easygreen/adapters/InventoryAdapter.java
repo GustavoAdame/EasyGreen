@@ -2,6 +2,7 @@ package com.example.easygreen.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
     /*** Add the following data into ViewHolder **********************/
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         tvIngredientName.setText(ingredients.get(position));
     }
 
@@ -122,11 +123,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             @Override
             public void done(List<Inventory> objects, ParseException e) {
                 JSONArray expirations = objects.get(0).getExpirations();
-                try {
-                    Snackbar.make(view, "Expires on: " +
-                            expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
+                if(expirations.length() != 0){
+                    try {
+                        Snackbar.make(view, "Expires on: " +
+                                expirations.getString(adapterPosition), Snackbar.LENGTH_SHORT).show();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
