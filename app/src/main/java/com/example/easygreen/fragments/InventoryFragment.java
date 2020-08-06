@@ -26,10 +26,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.easygreen.R;
 import com.example.easygreen.activities.MainActivity;
 import com.example.easygreen.adapters.InventoryAdapter;
 import com.example.easygreen.models.Inventory;
+import com.example.easygreen.models.Recipe;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -40,11 +43,14 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
 
 public class InventoryFragment extends Fragment {
     /******** Local Variable ************************/
@@ -52,11 +58,13 @@ public class InventoryFragment extends Fragment {
     private RecyclerView rvInventory;
     private List<String> ingredients = new ArrayList<>();
     public String inventory_list = "";
+    public String API_Key;
 
     /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        API_Key = getActivity().getResources().getString(R.string.API_Key);
         displayToolbar(getActivity());
         displayRecyclerView(getActivity());
         getInventory();
@@ -67,9 +75,11 @@ public class InventoryFragment extends Fragment {
         btnBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(getActivity());
-                intentIntegrator.setPrompt("Scan an item");
-                intentIntegrator.forSupportFragment(InventoryFragment.this).initiateScan();
+                IntentIntegrator.forSupportFragment(InventoryFragment.this)
+                        .setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES)
+                        .setBeepEnabled(true)
+                        .setPrompt("Scan an item")
+                        .initiateScan();
             }
         });
 
@@ -92,14 +102,12 @@ public class InventoryFragment extends Fragment {
                 if(direction == ItemTouchHelper.LEFT){
                     int position = viewHolder.getAdapterPosition();
 
-                    Log.d("Gustavo", "onSwiped - Before: " + ingredients.size() + " list: "+ ingredients.toString());
                     String prevItem = ingredients.get(position);
                     deleteItemInventory(position);
                     ingredients.remove(position);
                     Snackbar.make(rvInventory, prevItem + " Deleted!", Snackbar.LENGTH_SHORT).show();
                     inventoryAdapter.notifyItemRemoved(position);
                     rvInventory.setAdapter(inventoryAdapter);
-                    Log.d("Gustavo", "onSwiped - After: " + ingredients.size() + " list: "+ ingredients.toString());
                 }
             }
 
@@ -125,11 +133,41 @@ public class InventoryFragment extends Fragment {
             if(result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                searchItembyCode(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    public void searchItembyCode(String currentScan) {
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("https")
+                .host("api.spoonacular.com")
+                .addPathSegment("food")
+                .addPathSegment("products")
+                .addPathSegment("upc")
+                .addPathSegment(currentScan)
+                .build();
+
+        final String request = url+"?apiKey="+API_Key;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(request, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject item = json.jsonObject;
+                try {
+                    String newItem = item.getString("title");
+                    updateInventory(newItem);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d("searchItembyCode()", response);
+            }
+        });
     }
 
     /***************** Inflating Views and RecyclerView *****************/
