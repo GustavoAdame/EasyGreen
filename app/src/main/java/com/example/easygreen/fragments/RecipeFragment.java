@@ -75,7 +75,7 @@ public class RecipeFragment extends Fragment {
                 .addQueryParameter("ignorePantry", String.valueOf(true))
                 .build();
 
-        final String request = url+"&apiKey="+API_Key;
+        final String request = url+"&apiKey=33d7a66937eb4fa89998c189c7ade6f3";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override

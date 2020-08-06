@@ -71,6 +71,7 @@ public class InventoryFragment extends Fragment {
         searchIngredients();
         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
 
+        /******* User clicks [Barcode] to scan item *********/
         ImageView btnBarcode = getActivity().findViewById(R.id.btnBarcode);
         btnBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +151,7 @@ public class InventoryFragment extends Fragment {
                 .addPathSegment(currentScan)
                 .build();
 
-        final String request = url+"?apiKey="+API_Key;
+        final String request = url+"?apiKey=33d7a66937eb4fa89998c189c7ade6f3";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override
