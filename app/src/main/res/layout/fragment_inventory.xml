@@ -28,17 +28,25 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary">
 
-            <AutoCompleteTextView
-                android:id="@+id/actvAdd"
-                android:layout_width="370dp"
-                android:layout_height="wrap_content"
-                android:completionThreshold="1"
-                android:background="@android:color/white"
-                android:hint="Search Ingredients"
-                android:maxLines="1"
-                android:inputType="text"
-                android:imeOptions="actionDone"
-                android:singleLine="true"/>
+                <AutoCompleteTextView
+                    android:id="@+id/actvAdd"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:completionThreshold="1"
+                    android:background="@android:color/white"
+                    android:hint="Search Ingredients"
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"/>
+
+                <ImageView
+                    android:id="@+id/btnBarcode"
+                    android:clickable="true"
+                    android:src="@drawable/ic_scan"
+                    android:layout_marginLeft="25dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
 
         </androidx.appcompat.widget.Toolbar>
 
