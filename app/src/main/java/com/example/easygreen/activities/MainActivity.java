@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
                      active = recipeFragment;
                      return true;
 
-                 case R.id.action_shopping_list:
-                     fragmentManager.beginTransaction().hide(active).show(shoppingListFragment).commit();
-                     active = shoppingListFragment;
-                     return true;
-
                  case R.id.action_discover:
                      fragmentManager.beginTransaction().hide(active).show(discoverFragment).commit();
                      active = discoverFragment;
+                     return true;
+
+                 case R.id.action_shopping_list:
+                     fragmentManager.beginTransaction().hide(active).show(shoppingListFragment).commit();
+                     active = shoppingListFragment;
                      return true;
 
                  case R.id.action_account:

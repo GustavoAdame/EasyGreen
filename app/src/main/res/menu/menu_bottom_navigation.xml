@@ -16,18 +16,19 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_discover"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_explore_24"
+        android:title="Discover"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_shopping_list"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="Shopping List"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_discover"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_explore_24"
-        android:title="Discover"
-        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_account"
