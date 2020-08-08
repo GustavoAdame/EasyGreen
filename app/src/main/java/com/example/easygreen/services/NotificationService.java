@@ -35,7 +35,7 @@ public class NotificationService extends Service {
         int color = getResources().getColor(R.color.green);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Upcoming Expiration Date")
-                .setContentText(item + " : " + input)
+                .setContentText(item + " " + input)
                 .setColor(color)
                 .setSmallIcon(R.drawable.noun_leaves_1861557)
                 .setContentIntent(pendingIntent)

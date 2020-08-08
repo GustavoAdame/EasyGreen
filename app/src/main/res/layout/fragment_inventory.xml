@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/black"
     tools:context=".fragments.InventoryFragment">
 
     <RelativeLayout
@@ -14,61 +14,61 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarTitle"
-            app:title="Inventory"
-            app:titleTextColor="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            app:titleMarginStart="160dp"
-            android:background="?attr/colorPrimary" />
+            android:layout_height="40dp"
+            android:background="?attr/colorPrimary"
+            app:title="Inventory"
+            app:titleMarginStart="150dp"
+            app:titleTextColor="@android:color/white" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarAdd"
-            android:layout_below="@+id/toolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarTitle"
             android:background="?attr/colorPrimary">
 
-                <AutoCompleteTextView
-                    android:id="@+id/actvAdd"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:completionThreshold="1"
-                    android:background="@android:color/white"
-                    android:hint="Search Ingredients"
-                    android:maxLines="1"
-                    android:inputType="text"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
+            <AutoCompleteTextView
+                android:id="@+id/actvAdd"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:completionThreshold="1"
+                android:hint="Search Ingredients"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-                <ImageView
-                    android:id="@+id/btnBarcode"
-                    android:clickable="true"
-                    android:src="@drawable/ic_scan"
-                    android:layout_marginLeft="25dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+            <ImageView
+                android:id="@+id/btnBarcode"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:clickable="true"
+                android:src="@drawable/ic_scan" />
 
         </androidx.appcompat.widget.Toolbar>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvInventory"
-            android:layout_below="@+id/toolbarAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnGetRecipes"/>
+            android:layout_above="@+id/btnGetRecipes"
+            android:layout_below="@+id/toolbarAdd" />
 
         <Button
             android:id="@+id/btnGetRecipes"
-            android:text="Get Recipes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:clickable="true"
+            android:text="Get Recipes" />
 
     </RelativeLayout>
 

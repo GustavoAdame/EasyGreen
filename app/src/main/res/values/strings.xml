@@ -10,6 +10,7 @@
     <string name="facebook_app_id">2326856904290640</string>
     <string name="fb_login_protocol_scheme">fb2326856904290640</string>
     <string name="API_Key">375469b443e24f9fa1b3270fad4d7402</string>
+    <string name="API_key">4D1F4790339C84A1D752F23DB9647FAF</string>
     <string name="access_token">EAAhEQ5c5MVABAJHfU6EhcJ1X2Ew5ZABzUmBVid6bsQ7nW1bH8zDtOssZA2lPF8REFaGKW1vAsZBNoLkdZCeCXepA87OL5UWz8HnYZCZB3AlB38gG2ZC002BC9ZAn8PQUeTuEQnHtI4J2ovD3T7ZAeATzDxrKxjbDx9dogQwsMmQBLwHum70diQK7D</string>
 
     <string-array name="Ingredient">

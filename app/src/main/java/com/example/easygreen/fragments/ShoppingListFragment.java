@@ -57,11 +57,13 @@ public class ShoppingListFragment extends Fragment {
     private EditText addItem;
     private Button btnAdd;
     private List<String> items = new ArrayList<>();
+    private String API_key;
 
     /************* Initial State of Fragment ********************/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        API_key = getActivity().getResources().getString(R.string.API_key);
         displayToolbar(getActivity());
         displayViews(getActivity());
         getShoppingList();
@@ -147,7 +149,7 @@ public class ShoppingListFragment extends Fragment {
                 .addPathSegment(contents)
                 .build();
 
-        final String request = url+"?apikey=4D1F4790339C84A1D752F23DB9647FAF";
+        final String request = url+"?apikey=";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override

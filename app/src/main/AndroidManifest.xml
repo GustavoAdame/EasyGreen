@@ -21,9 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.UserSignupActivity"></activity>
-        <activity android:name=".activities.UserLoginActivity" />
-        <activity android:name=".activities.RecipeDetailsActivity" />
+        <activity android:name=".activities.UserSignupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.UserLoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activities.RecipeDetailsActivity"
+            android:screenOrientation="portrait"/>
 
         <provider android:authorities="com.facebook.app.FacebookContentProvider2326856904290640"
             android:name="com.facebook.FacebookContentProvider"
@@ -56,7 +59,8 @@
             tools:replace="android:screenOrientation"
             android:stateNotNeeded="true"/>
 
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -66,7 +70,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -151,7 +151,7 @@ public class InventoryFragment extends Fragment {
                 .addPathSegment(currentScan)
                 .build();
 
-        final String request = url+"?apiKey=33d7a66937eb4fa89998c189c7ade6f3";
+        final String request = url+"?apiKey="+API_Key;
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(request, new JsonHttpResponseHandler() {
             @Override

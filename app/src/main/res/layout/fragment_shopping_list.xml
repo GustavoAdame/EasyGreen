@@ -14,79 +14,67 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarTitle"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="?attr/colorPrimary">
-
-            <TextView
-                android:textAlignment="center"
-                android:gravity="center_horizontal"
-                android:text="Shopping List"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="40dp"
+            android:background="?attr/colorPrimary"
+            app:title="Shopping List"
+            app:titleMarginStart="135dp"
+            app:titleTextColor="@android:color/white"/>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarAdd"
-            android:layout_below="@+id/toolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarTitle"
             android:background="?attr/colorPrimary">
 
             <EditText
                 android:id="@+id/addItem"
-                android:hint="Add item"
-                android:textColorHint="@android:color/black"
-                android:textColor="@android:color/black"
-                android:background="@android:color/white"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:background="@android:color/white"
+                android:hint="Add item"
                 android:imeOptions="actionDone"
-                android:singleLine="true"/>
-
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black" />
 
             <Button
                 android:id="@+id/btnAdd"
-                android:text="Add"
-                android:backgroundTint="@android:color/black"
                 android:layout_width="70dp"
+                android:layout_height="38dp"
+                android:backgroundTint="@android:color/black"
                 android:clickable="true"
-                android:layout_height="40dp"/>
-
+                android:text="Add" />
 
             <ImageView
                 android:id="@+id/btnBarcode2"
-                android:clickable="true"
-                android:src="@drawable/ic_scan"
-                android:layout_marginLeft="25dp"
                 android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                android:layout_marginLeft="32dp"
+                android:clickable="true"
+                android:src="@drawable/ic_scan" />
 
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
             android:id="@+id/tvTitleShopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/toolbarAdd"
-            android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
             android:text="What's in my List"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShoppingList"
-            android:layout_margin="8dp"
-            android:layout_below="@+id/tvTitleShopping"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tvTitleShopping"
+            android:layout_margin="8dp"/>
 
 
     </RelativeLayout>
