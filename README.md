@@ -134,7 +134,7 @@ MP4 created with [KAP](https://getkap.co/)
 
 ### Networking
 **Spoonacular API**
-<br> Base URL:https://api.spoonacular.com/recipes/
+<br> Base URL: https://api.spoonacular.com/recipes/
 
 | HTTP Verb | Endpoint | Description|
 | -------- | -------- | -------- |
@@ -142,9 +142,8 @@ MP4 created with [KAP](https://getkap.co/)
 | ` GET `    | /{id}/information      | Get information about a recipe  |
 | ` GET `    | {id}/analyzedInstructions   | Get a recipe instructions |
 
-**Facebook Pages API **
-
-<br> Base URL:https://graph.facebook.com/
+**Facebook Pages API**
+<br> Base URL: https://graph.facebook.com/
 
 | HTTP Verb | Endpoint | Description|
 | -------- | -------- | -------- |
