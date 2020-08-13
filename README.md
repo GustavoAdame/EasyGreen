@@ -141,3 +141,28 @@ MP4 created with [KAP](https://getkap.co/)
 | ` GET `    | /findByIngredients     | Search Recipes by Ingredients    |
 | ` GET `    | /{id}/information      | Get information about a recipe  |
 | ` GET `    | {id}/analyzedInstructions   | Get a recipe instructions |
+
+**Facebook Pages API **
+
+<br> Base URL:https://graph.facebook.com/
+
+| HTTP Verb | Endpoint | Description|
+| -------- | -------- | -------- |
+| ` GET `    |  /{page-id}/feed  | Fetch videos from page which is the app's feed  |
+| ` POST `    |  /{page-id}/videos     | Post video to page - user post to feed  |
+
+## License
+
+    Copyright [2020] [Gustavo Adame Delarosa]
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
